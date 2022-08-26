@@ -1,0 +1,429 @@
+openapi: 3.0.3
+info:
+  title: Discloud API
+  description: |-
+    Está é a API da Discloud
+  termsOfService: https://discloudbot.com/legal/terms
+  #contact:
+  #  email: apiteam@swagger.io
+  #license:
+  #  name: Apache 2.0
+  #  url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.0
+#externalDocs:
+#  description: Find out more about Swagger
+#  url: http://swagger.io
+servers:
+  - url: https://api.discloud.app/v2
+tags:
+  - name: User
+    description: Informações sobre o Utilizador
+    #externalDocs:
+    #  description: Find out more
+    #  url: http://swagger.io
+  - name: Upload
+    description: Upload de aplicações
+    #externalDocs:
+    #  description: Find out more
+    #  url: http://swagger.io
+  - name: App
+    description: Rotas de gerenciamento do APP
+    #externalDocs:
+    #  description: Find out more about our store
+    #  url: http://swagger.io
+  - name: Team
+    description: Rotas de gerencialmento da Team
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Info user
+      description: Informação sobre o usuario que o token pertence
+      operationId: getUser
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - api-token: []
+  /upload:
+    post:
+      tags:
+        - Upload
+      summary: Upload app
+      description: Upload de Aplicação
+      operationId: uploadApp
+      requestBody:
+        $ref: '#/components/requestBodies/sendFile'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Upload'
+      security:
+        - api-token: []
+  /app/{appID}:
+    get:
+      tags:
+        - App
+      summary: Info App
+      description: Obter informações num App ou de tudos
+      operationId: getInfoApp
+      parameters:
+        - name: appID
+          in: path
+          description: ID da Aplicação ou "all" (sem apas) para ver tudos os apps
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApp'
+      security:
+        - api-token: []
+  /app/{appID}/status:
+    get:
+      tags:
+        - App
+      summary: Status App
+      description: Obter informações num App ou de tudos
+      operationId: getStatusApp
+      parameters:
+        - name: appID
+          in: path
+          description: ID da Aplicação ou "all" (sem apas) para ver tudos os apps
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getStatusApp'
+      security:
+        - api-token: []
+  /app/{appID}/logs:
+    get:
+      tags:
+        - App
+      summary: Logs App
+      description: Ober os logs da aplicação
+      operationId: getLogsApp
+      parameters:
+        - name: appID
+          in: path
+          description: ID da Aplicação ou "all" (sem apas) para ver tudos os apps
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getLogsApp'
+      security:
+        - api-token: []
+  /app/{appID}/backup:
+    get:
+      tags:
+        - App
+      summary: Logs App
+      description: Ober os logs da aplicação
+      operationId: getBackupApp
+      parameters:
+        - name: appID
+          in: path
+          description: ID da Aplicação ou "all" (sem apas) para ver tudos os apps
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getBackupApp'
+      security:
+        - api-token: []
+components:
+  schemas:
+    getBackupApp:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        apps:
+          oneOf:
+            - $ref: '#/components/schemas/Logs'
+            - type: array
+              items:
+                $ref: '#/components/schemas/Logs'
+#    Backup:
+#      type: object
+#      properties:
+      
+    getLogsApp:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        apps:
+          oneOf:
+            - $ref: '#/components/schemas/Logs'
+            - type: array
+              items:
+                $ref: '#/components/schemas/Logs'
+    Logs:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1661433839371
+        terminal:
+          type: object
+          properties:
+            big:
+              type: string
+              description: Logs da Aplicação
+            small:
+              type: string
+              description: Logs da Aplicação (versão pequena)
+    getStatusApp:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        apps:
+          oneOf:
+            - $ref: '#/components/schemas/StatusApp'
+            - type: array
+              items:
+                $ref: '#/components/schemas/StatusApp'
+    StatusApp:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1661433839371
+        container:
+          type: string
+          example: Online
+        cpu:
+          type: string
+          example: 0.00%
+        memory:
+          type: string
+          example: "54.3MB/512MB"
+        ssd:
+          type: string
+          example: 522MB
+        netIO:
+          type: object
+          properties:
+            down:
+              type: string
+              example: 11MB
+            up:
+              type: string
+              example: 1MB
+        last_restart:
+          type: string
+          example: 17 hours
+        startedAt:
+          type: string
+          example: "2022-08-24T23:19:45.675037702Z"
+    getApp:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        apps:
+          oneOf:
+            - $ref: '#/components/schemas/App'
+            - type: array
+              items:
+                $ref: '#/components/schemas/App'
+    App:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1661433839371
+        online:
+          type: boolean
+        ramKilled:
+          type: boolean
+          example: false
+        ram:
+          type: integer
+          example: 512
+        mainFile:
+          type: string
+          example: index.js
+        lang:
+            type: string
+            example: javascript
+        mods:
+          type: array
+          items:
+            type: string
+        autoDeployGit:
+          type: string
+        autoRestart:
+          type: boolean
+    Upload:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        statusCode:
+          $ref: '#/components/schemas/default/properties/statusCode'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        app:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 1661433839371
+            type:
+              type: string
+              enum: [bot, site]
+            name:
+              type: string
+            avatarURL:
+              type: string
+              example: https://i.imgur.com/bWhx7OT.png
+            ram:
+              type: integer
+              example: 100
+            mainFile:
+              type: string
+              example: index.js
+            lang:
+              type: string
+              example: javascript
+            version:
+              type: string
+              example: latest
+            addedAtTimestamp:
+              type: integer
+              example: 1661433861026
+            autoRestart:
+              type: boolean
+    User:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/default/properties/status'
+        message:
+          $ref: '#/components/schemas/default/properties/message'
+        user:
+          type: object
+          properties:
+            userID:
+              type: string
+              example: 144943581965189120
+            totalRamMb:
+              type: integer
+              example: 2048
+            ramUsedMb:
+              type: integer
+              example: 1024
+            subdomains:
+              type: array
+              items:
+                type: string
+                example: 
+                  - example
+            customdomains:
+              type: array
+              items:
+                type: string
+                example: 
+                  - example
+            apps:
+              type: array
+              items:
+                type: string
+                example:
+                  - "1661047896353"
+                  - example
+            plan:
+              type: string
+              example: Diamond
+            locale:
+              type: string
+              example: pt-BR
+            lastDataLeft:
+              type: object
+              properties:
+                days:
+                  type: integer
+                  example: 63
+                hours:
+                  type: integer
+                  example: 8
+                minutes:
+                  type: integer
+                  example: 53
+                seconds:
+                  type: integer
+                  example: 22
+            planDataEnd:
+              type: string
+              example: 2022-10-27T19:45:41.154Z
+    default:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status do request
+          enum: [ok, error]
+        statusCode:
+          type: string
+          example: 200
+        message:
+          type: string
+          description: Mensagem de resposta
+        
+  requestBodies:
+    sendFile:
+      content:
+        multipart/form-data:
+          schema:
+            required:
+              - file
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+  securitySchemes:
+    api-token:
+      type: apiKey
+      name: api-token
+      in: header
