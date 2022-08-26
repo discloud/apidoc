@@ -4,7 +4,7 @@
     "title": "Discloud API",
     "description": "Está é a API da Discloud",
     "termsOfService": "https://discloudbot.com/legal/terms",
-    "version": "2.0.0"
+    "version": "v2"
   },
   "servers": [
     {
@@ -277,6 +277,11 @@
       }
     }
   },
+  "security": [
+    {
+      "securityRequirement": []
+    }
+  ],
   "components": {
     "schemas": {
       "setLocale": {
