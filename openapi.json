@@ -1,0 +1,790 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Discloud API",
+    "description": "Está é a API da Discloud",
+    "termsOfService": "https://discloudbot.com/legal/terms",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.discloud.app/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "Informações sobre o Utilizador"
+    },
+    {
+      "name": "Upload",
+      "description": "Upload de aplicações"
+    },
+    {
+      "name": "App",
+      "description": "Rotas de gerenciamento do APP"
+    },
+    {
+      "name": "Team",
+      "description": "Rotas de gerencialmento da Team"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Info user",
+        "description": "Informação sobre o usuario que o token pertence",
+        "operationId": "getUser",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/upload": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Upload app",
+        "description": "Upload de Aplicação",
+        "operationId": "uploadApp",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/sendFile"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Upload"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/app/{appID}": {
+      "get": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Info App",
+        "description": "Obter informações num App ou de tudos",
+        "operationId": "getInfoApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getApp"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/app/{appID}/status": {
+      "get": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Status App",
+        "description": "Obter informações num App ou de tudos",
+        "operationId": "getStatusApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getStatusApp"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/app/{appID}/logs": {
+      "get": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Logs App",
+        "description": "Ober os logs da aplicação",
+        "operationId": "getLogsApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getLogsApp"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/app/{appID}/backup": {
+      "get": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Logs App",
+        "description": "Ober os logs da aplicação",
+        "operationId": "getBackupApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getBackupApp"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-token": []
+          }
+        ]
+      }
+    },
+    "/locale/{locale}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs App",
+        "description": "Ober os logs da aplicação",
+        "operationId": "setLocale",
+        "parameters": [
+          {
+            "name": "locale",
+            "in": "path",
+            "description": "Linguagem pertendida",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pt-BR",
+                "en-US"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/setLocale"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "setLocale": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "locale:": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "en-US"
+            ]
+          }
+        }
+      },
+      "getBackupApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "backups": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Backup"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Backups"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "Backup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "Backups": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "getLogsApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Logs"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Logs"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "Logs": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "terminal": {
+            "type": "object",
+            "properties": {
+              "big": {
+                "type": "string",
+                "description": "Logs da Aplicação"
+              },
+              "small": {
+                "type": "string",
+                "description": "Logs da Aplicação (versão pequena)"
+              },
+              "url": {
+                "type": "string",
+                "description": "Url para ver os logs via site"
+              }
+            }
+          }
+        }
+      },
+      "getStatusApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/StatusApp"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StatusApp"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "StatusApp": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string",
+            "enum": [
+              "Online",
+              "Offline"
+            ]
+          },
+          "cpu": {
+            "type": "string",
+            "example": "0.00%"
+          },
+          "memory": {
+            "type": "string",
+            "example": "54.3MB/512MB"
+          },
+          "ssd": {
+            "type": "string",
+            "example": "522MB"
+          },
+          "netIO": {
+            "type": "object",
+            "properties": {
+              "down": {
+                "type": "string",
+                "example": "11MB"
+              },
+              "up": {
+                "type": "string",
+                "example": "1MB"
+              }
+            }
+          },
+          "last_restart": {
+            "type": "string",
+            "example": "17 hours"
+          },
+          "startedAt": {
+            "type": "string",
+            "example": "2022-08-24T23:19:45.675037702Z"
+          }
+        }
+      },
+      "getApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/App"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/App"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "App": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "ramKilled": {
+            "type": "boolean",
+            "example": false
+          },
+          "ram": {
+            "type": "integer",
+            "example": 512
+          },
+          "mainFile": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string",
+            "enum": [
+              "javascript",
+              "python",
+              "java",
+              "ruby",
+              "go",
+              "typescript",
+              "rust",
+              "html",
+              "php"
+            ]
+          },
+          "mods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "autoDeployGit": {
+            "type": "string"
+          },
+          "autoRestart": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Upload": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "statusCode": {
+            "type": "string",
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "app": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "bot",
+                  "site"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "avatarURL": {
+                "type": "string"
+              },
+              "ram": {
+                "type": "integer",
+                "example": 100
+              },
+              "mainFile": {
+                "type": "string"
+              },
+              "lang": {
+                "type": "string",
+                "enum": [
+                  "javascript",
+                  "python",
+                  "java",
+                  "ruby",
+                  "go",
+                  "typescript",
+                  "rust",
+                  "html",
+                  "php"
+                ]
+              },
+              "version": {
+                "type": "string"
+              },
+              "addedAtTimestamp": {
+                "type": "integer",
+                "example": 1661433861026
+              },
+              "autoRestart": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "userID": {
+                "type": "string"
+              },
+              "totalRamMb": {
+                "type": "integer",
+                "example": 100
+              },
+              "ramUsedMb": {
+                "type": "integer",
+                "example": 100
+              },
+              "subdomains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "customdomains": {
+                "type": "array",
+                "items": {}
+              },
+              "apps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "appsStatus": {
+                "type": "object",
+                "example": {
+                  "string": {
+                    "online": true,
+                    "ramKilled": false,
+                    "exitCode": 0
+                  }
+                },
+                "additionalProperties": true
+              },
+              "plan": {
+                "type": "string",
+                "enum": [
+                  "Free",
+                  "Carbon",
+                  "Gold",
+                  "Platinum",
+                  "Diamond",
+                  "Ruby",
+                  "Sapphire",
+                  "Krypton",
+                  "Special",
+                  "Booster"
+                ]
+              },
+              "locale": {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "en-US"
+                ]
+              },
+              "lastDataLeft": {
+                "type": "object",
+                "properties": {
+                  "days": {
+                    "type": "integer"
+                  },
+                  "hours": {
+                    "type": "integer"
+                  },
+                  "minutes": {
+                    "type": "integer"
+                  },
+                  "seconds": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "days",
+                  "hours",
+                  "minutes",
+                  "seconds"
+                ],
+                "additionalProperties": false
+              },
+              "planDataEnd": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "userID",
+              "totalRamMb",
+              "ramUsedMb",
+              "subdomains",
+              "customdomains",
+              "apps",
+              "appsStatus",
+              "plan",
+              "locale",
+              "lastDataLeft",
+              "planDataEnd"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "message",
+          "user"
+        ]
+      }
+    },
+    "requestBodies": {
+      "sendFile": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "required": [
+                "file"
+              ],
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api-token": {
+        "type": "apiKey",
+        "name": "api-token",
+        "in": "header"
+      }
+    }
+  }
+}
