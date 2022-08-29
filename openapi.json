@@ -401,6 +401,42 @@
           }
         }
       }
+    },
+    "/app/{appID}/commit": {
+      "put": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Commit App",
+        "description": "Commit App",
+        "operationId": "commitApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/sendFile"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sApp"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "security": [
@@ -410,6 +446,25 @@
   ],
   "components": {
     "schemas": {
+      "commitApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "statusCode":{
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
       "stopApps": {
         "type": "object",
         "properties": {
@@ -831,7 +886,7 @@
             ]
           },
           "statusCode": {
-            "type": "string",
+            "type": "number",
             "example": 200
           },
           "message": {
