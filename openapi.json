@@ -49,12 +49,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/upload": {
@@ -79,12 +74,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/app/{appID}": {
@@ -117,12 +107,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/app/{appID}/status": {
@@ -155,12 +140,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/app/{appID}/logs": {
@@ -193,12 +173,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/app/{appID}/backup": {
@@ -231,12 +206,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "api-token": []
-          }
-        ]
+        }
       }
     },
     "/locale/{locale}": {
@@ -244,8 +214,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Logs App",
-        "description": "Ober os logs da aplicação",
+        "summary": "Set locale",
+        "description": "Setar a linguagem das mensagens que a discloud retorna",
         "operationId": "setLocale",
         "parameters": [
           {
@@ -275,15 +245,300 @@
           }
         }
       }
+    },
+    "/app/{appID}/start": {
+      "put": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Start App",
+        "description": "Iniciar aplicação",
+        "operationId": "startApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/sApp"
+                    },
+                    {
+                      "$ref": "#/components/schemas/startApps"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app/{appID}/restart": {
+      "put": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Retart App",
+        "description": "Reiniciar aplicação",
+        "operationId": "restartApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/sApp"
+                    },
+                    {
+                      "$ref": "#/components/schemas/restartApps"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app/{appID}/stop": {
+      "put": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Stop App",
+        "description": "Parar aplicação",
+        "operationId": "stopApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/sApp"
+                    },
+                    {
+                      "$ref": "#/components/schemas/stopApps"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app/{appID}/ram": {
+      "put": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Set RAM App",
+        "description": "Setar a RAM da App",
+        "operationId": "setRamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/setRam"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sApp"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "security": [
     {
-      "securityRequirement": []
+      "api-token": []
     }
   ],
   "components": {
     "schemas": {
+      "stopApps": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "type": "object",
+            "properties": {
+              "stoped": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "alreadyOffline": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "alreadyInProcess": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "restartApps": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "type": "object",
+            "properties": {
+              "restarted": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "restartedApps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "alreadyOffline": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "sApp": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "startApps": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "apps": {
+            "type": "object",
+            "properties": {
+              "started": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "alreadyOnline": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "alreadyInProcess": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "setLocale": {
         "type": "object",
         "properties": {
@@ -777,6 +1032,24 @@
                 "file": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "setRam": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "ramMB"
+              ],
+              "type": "object",
+              "properties": {
+                "ramMB": {
+                  "type": "number",
+                  "minimum": 100
                 }
               }
             }
