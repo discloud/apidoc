@@ -14,23 +14,23 @@
   "tags": [
     {
       "name": "User",
-      "description": "Informações sobre o Utilizador"
+      "description": "User Information"
     },
     {
       "name": "Upload",
-      "description": "Upload de Aplicações"
+      "description": "Application Uploads"
     },
     {
       "name": "App",
-      "description": "Rotas de Gerenciamento de APPs"
+      "description": "APPs Management Routes"
     },
     {
       "name": "Team Manager",
-      "description": "Rotas de Gerenciamento da Team"
+      "description": "Team Management Routes"
     },
     {
       "name": "Team",
-      "description": "Rotas de Gerenciamento das Aplicações da Team"
+      "description": "Team Application Management Routes"
     }
   ],
   "paths": {
@@ -40,7 +40,7 @@
           "User"
         ],
         "summary": "User Info",
-        "description": "Informações sobre o usuário do token fornecido",
+        "description": "Provided token user information",
         "operationId": "getUser",
         "responses": {
           "200": {
@@ -55,7 +55,7 @@
           "Upload"
         ],
         "summary": "App Upload",
-        "description": "Fazer o upload de uma aplicação",
+        "description": "Upload an application",
         "operationId": "uploadApp",
         "requestBody": {
           "$ref": "#/components/requestBodies/sendFile"
@@ -73,13 +73,13 @@
           "App"
         ],
         "summary": "App Info",
-        "description": "Obter informações da aplicação",
+        "description": "Get application information",
         "operationId": "getInfoApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quootes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -99,13 +99,13 @@
           "App"
         ],
         "summary": "App Status",
-        "description": "Obter informações da aplicação",
+        "description": "Get application status information",
         "operationId": "getStatusApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -125,13 +125,13 @@
           "App"
         ],
         "summary": "App Logs",
-        "description": "Obter os logs da aplicação",
+        "description": "Get the application logs",
         "operationId": "getLogsApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -151,13 +151,13 @@
           "App"
         ],
         "summary": "App Backup",
-        "description": "Obter o backup da aplicação",
+        "description": "Obtain application backup",
         "operationId": "getBackupApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -177,7 +177,7 @@
           "User"
         ],
         "summary": "Set locale",
-        "description": "Mudar a linguagem do usuário do token fornecido",
+        "description": "Change the user language of the given token",
         "operationId": "setLocale",
         "parameters": [
           {
@@ -207,13 +207,13 @@
           "App"
         ],
         "summary": "App Start",
-        "description": "Iniciar Aplicação",
+        "description": "Start an Application",
         "operationId": "startApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -233,13 +233,13 @@
           "App"
         ],
         "summary": "App Restart",
-        "description": "Reiniciar aplicação",
+        "description": "Restart an application",
         "operationId": "restartApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -259,13 +259,13 @@
           "App"
         ],
         "summary": "App Stop",
-        "description": "Parar aplicação",
+        "description": "Stop an aplicação",
         "operationId": "stopApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -285,13 +285,13 @@
           "App"
         ],
         "summary": "App RAM",
-        "description": "Mudar a RAM da aplicação",
+        "description": "Change the application RAM",
         "operationId": "setRamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -314,13 +314,13 @@
           "App"
         ],
         "summary": "App Commit",
-        "description": "Fazer um Commit para uma aplicação",
+        "description": "Commit to an application (all is not allowed)",
         "operationId": "commitApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -343,13 +343,13 @@
           "App"
         ],
         "summary": "App Delete",
-        "description": "Excluir aplicação",
+        "description": "Delete an application",
         "operationId": "deleteApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without tabs) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -369,13 +369,13 @@
           "Team Manager"
         ],
         "summary": "Obter App Team",
-        "description": "Obter informações da equipa de uma aplicação",
+        "description": "Get team information from an application",
         "operationId": "getTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -392,14 +392,14 @@
         "tags": [
           "Team Manager"
         ],
-        "summary": "Adiciona um membro à Team da aplicação",
-        "description": "Adiciona um membro à Team da aplicação",
+        "summary": "Adds a member to the application Team",
+        "description": "Adds a member to the application Team",
         "operationId": "createTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -420,14 +420,14 @@
         "tags": [
           "Team Manager"
         ],
-        "summary": "Editar as permisões do membro de uma Team",
-        "description": "Editar as permisões do membro de uma Team",
+        "summary": "Edit the permissions of a Team member",
+        "description": "Edit the permissions of a Team member",
         "operationId": "editTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -449,14 +449,14 @@
         "tags": [
           "Team Manager"
         ],
-        "summary": "Remover um membro",
-        "description": "Remove um membro da Team",
+        "summary": "Remove a member",
+        "description": "Removes a Team Member",
         "operationId": "deleteTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -484,8 +484,8 @@
         "tags": [
           "Team"
         ],
-        "summary": "Obter Team Apps",
-        "description": "Obter todas as aplicações Team que o proprietário do token tem acesso",
+        "summary": "Get Team Apps",
+        "description": "Get all Team applications that the token owner has access to",
         "operationId": "getTeam",
         "responses": {
           "200": {
@@ -499,14 +499,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Iniciar Aplicação",
-        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "summary": "App Start",
+        "description": "Application ID or \"all\" (without tabs) to see all apps",
         "operationId": "startTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -525,14 +525,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Reiniciar Aplicação",
-        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "summary": "App Restart",
+        "description": "Application ID or \"all\" (without quotes) to see all apps",
         "operationId": "restartTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -551,14 +551,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Parar aplicação",
-        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "summary": "App Stop",
+        "description": "Application ID or \"all\" (without quotes) to see all apps",
         "operationId": "stopTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -577,14 +577,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Commit App",
-        "description": "Fazer commit de uma aplicação (all não é permitido)",
+        "summary": "App Commit",
+        "description": "Commit to an application (all is not allowed)",
         "operationId": "commitTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -606,14 +606,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Backup App",
-        "description": "Obter o backup da aplicação",
+        "summary": "App Backup",
+        "description": "Obtain application backup",
         "operationId": "getBackupTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -633,13 +633,13 @@
           "Team"
         ],
         "summary": "Logs App",
-        "description": "Ober os logs da aplicação",
+        "description": "Get the application logs",
         "operationId": "getLogsTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -658,14 +658,14 @@
         "tags": [
           "Team"
         ],
-        "summary": "Mudar RAM do App",
-        "description": "Mudar a quantidade de RAM de uma Aplicação",
+        "summary": "Change App RAM",
+        "description": "Change the amount of RAM for an Application",
         "operationId": "setRamTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação",
+            "description": "Application ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -688,13 +688,13 @@
           "Team"
         ],
         "summary": "Status App",
-        "description": "Obter informações de uma aplicação",
+        "description": "Get application status information",
         "operationId": "getStatusTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"

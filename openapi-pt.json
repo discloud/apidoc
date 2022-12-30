@@ -99,7 +99,7 @@
           "App"
         ],
         "summary": "App Status",
-        "description": "Obter informações da aplicação",
+        "description": "Obter informações de status da aplicação",
         "operationId": "getStatusApp",
         "parameters": [
           {
@@ -633,7 +633,7 @@
           "Team"
         ],
         "summary": "Logs App",
-        "description": "Ober os logs da aplicação",
+        "description": "Obter os logs da aplicação",
         "operationId": "getLogsTeamApp",
         "parameters": [
           {
