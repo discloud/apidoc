@@ -79,7 +79,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quootes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -131,7 +131,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -157,7 +157,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -213,7 +213,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -239,7 +239,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -265,7 +265,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -349,7 +349,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without tabs) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) to see all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -500,7 +500,7 @@
           "Team"
         ],
         "summary": "App Start",
-        "description": "Application ID or \"all\" (without tabs) to see all apps",
+        "description": "Application ID or \"all\" (without quotes) to see all apps",
         "operationId": "startTeamApp",
         "parameters": [
           {
