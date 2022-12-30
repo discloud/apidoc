@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Discloud API",
-    "description": "Está é a API da Discloud",
+    "description": "Bem Vindo á API da DisCloud!",
     "termsOfService": "https://discloudbot.com/legal/terms",
     "version": "v2"
   },
@@ -18,15 +18,19 @@
     },
     {
       "name": "Upload",
-      "description": "Upload de aplicações"
+      "description": "Upload de Aplicações"
     },
     {
       "name": "App",
-      "description": "Rotas de gerenciamento do APP"
+      "description": "Rotas de Gerenciamento de APPs"
+    },
+    {
+      "name": "Team Manager",
+      "description": "Rotas de Gerenciamento da Team"
     },
     {
       "name": "Team",
-      "description": "Rotas de gerencialmento da Team"
+      "description": "Rotas de Gerenciamento das Aplicações da Team"
     }
   ],
   "paths": {
@@ -35,19 +39,12 @@
         "tags": [
           "User"
         ],
-        "summary": "Info user",
-        "description": "Informação sobre o usuario que o token pertence",
+        "summary": "User Info",
+        "description": "Informações sobre o usuário do token fornecido",
         "operationId": "getUser",
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -57,22 +54,15 @@
         "tags": [
           "Upload"
         ],
-        "summary": "Upload app",
-        "description": "Upload de Aplicação",
+        "summary": "App Upload",
+        "description": "Fazer o upload de uma aplicação",
         "operationId": "uploadApp",
         "requestBody": {
           "$ref": "#/components/requestBodies/sendFile"
         },
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Upload"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -82,8 +72,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Info App",
-        "description": "Obter informações num App ou de tudos",
+        "summary": "App Info",
+        "description": "Obter informações da aplicação",
         "operationId": "getInfoApp",
         "parameters": [
           {
@@ -98,14 +88,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getApp"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -115,8 +98,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Status App",
-        "description": "Obter informações num App ou de tudos",
+        "summary": "App Status",
+        "description": "Obter informações da aplicação",
         "operationId": "getStatusApp",
         "parameters": [
           {
@@ -131,14 +114,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getStatusApp"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -148,8 +124,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Logs App",
-        "description": "Ober os logs da aplicação",
+        "summary": "App Logs",
+        "description": "Obter os logs da aplicação",
         "operationId": "getLogsApp",
         "parameters": [
           {
@@ -164,14 +140,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getLogsApp"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -181,8 +150,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Logs App",
-        "description": "Ober os logs da aplicação",
+        "summary": "App Backup",
+        "description": "Obter o backup da aplicação",
         "operationId": "getBackupApp",
         "parameters": [
           {
@@ -197,14 +166,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/getBackupApp"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -215,13 +177,13 @@
           "User"
         ],
         "summary": "Set locale",
-        "description": "Setar a linguagem das mensagens que a discloud retorna",
+        "description": "Mudar a linguagem do usuário do token fornecido",
         "operationId": "setLocale",
         "parameters": [
           {
             "name": "locale",
             "in": "path",
-            "description": "Linguagem pertendida",
+            "description": "Linguagem pretendida",
             "required": true,
             "schema": {
               "type": "string",
@@ -234,14 +196,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/setLocale"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -251,8 +206,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Start App",
-        "description": "Iniciar aplicação",
+        "summary": "App Start",
+        "description": "Iniciar Aplicação",
         "operationId": "startApp",
         "parameters": [
           {
@@ -267,21 +222,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/sApp"
-                    },
-                    {
-                      "$ref": "#/components/schemas/startApps"
-                    }
-                  ]
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -291,7 +232,7 @@
         "tags": [
           "App"
         ],
-        "summary": "Retart App",
+        "summary": "App Restart",
         "description": "Reiniciar aplicação",
         "operationId": "restartApp",
         "parameters": [
@@ -307,21 +248,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/sApp"
-                    },
-                    {
-                      "$ref": "#/components/schemas/restartApps"
-                    }
-                  ]
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -331,7 +258,7 @@
         "tags": [
           "App"
         ],
-        "summary": "Stop App",
+        "summary": "App Stop",
         "description": "Parar aplicação",
         "operationId": "stopApp",
         "parameters": [
@@ -347,21 +274,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/sApp"
-                    },
-                    {
-                      "$ref": "#/components/schemas/stopApps"
-                    }
-                  ]
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -371,8 +284,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Set RAM App",
-        "description": "Setar a RAM da App",
+        "summary": "App RAM",
+        "description": "Mudar a RAM da aplicação",
         "operationId": "setRamApp",
         "parameters": [
           {
@@ -390,14 +303,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/sApp"
-                }
-              }
-            }
+            "description": "Successful operation"
           }
         }
       }
@@ -407,8 +313,8 @@
         "tags": [
           "App"
         ],
-        "summary": "Commit App",
-        "description": "Commit App",
+        "summary": "App Commit",
+        "description": "Fazer um Commit para uma aplicação",
         "operationId": "commitApp",
         "parameters": [
           {
@@ -426,14 +332,345 @@
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/sApp"
-                }
-              }
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/app/{appID}/delete": {
+      "delete": {
+        "tags": [
+          "App"
+        ],
+        "summary": "App Delete",
+        "description": "Excluir aplicação",
+        "operationId": "deleteApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/app/{appID}/team": {
+      "get": {
+        "tags": [
+          "Team Manager"
+        ],
+        "summary": "Obter App Team",
+        "description": "Obter informações da equipa de uma aplicação",
+        "operationId": "getTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Team Manager"
+        ],
+        "summary": "Adiciona um membro à Team da aplicação",
+        "description": "Adiciona um membro à Team da aplicação",
+        "operationId": "createTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/teamManager"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+      ,
+      "put": {
+        "tags": [
+          "Team Manager"
+        ],
+        "summary": "Editar as permisões do membro de uma Team",
+        "description": "Editar as permisões do membro de uma Team",
+        "operationId": "editTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/teamManager"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/app/{appID}/team/{modID}": {
+      "delete": {
+        "tags": [
+          "Team Manager"
+        ],
+        "summary": "Remover um membro",
+        "description": "Remove um membro da Team",
+        "operationId": "deleteTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "modID",
+            "in": "path",
+            "description": "ID do mod",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Obter Team Apps",
+        "description": "Obter todas as aplicações Team que o proprietário do token tem acesso",
+        "operationId": "getTeam",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/start": {
+      "put": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Iniciar Aplicação",
+        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "operationId": "getTeam",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/restart": {
+      "put": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Reiniciar Aplicação",
+        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "operationId": "getTeam",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/stop": {
+      "put": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Parar aplicação",
+        "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+        "operationId": "getTeam",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/commit": {
+      "put": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Commit App",
+        "description": "Fazer commit de uma aplicação (all não é permitido)",
+        "operationId": "commitTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/sendFile"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/backup": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Backup App",
+        "description": "Obter o backup da aplicação",
+        "operationId": "getBackupTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/logs": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Logs App",
+        "description": "Ober os logs da aplicação",
+        "operationId": "getLogsTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/ram": {
+      "put": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Mudar RAM do App",
+        "description": "Mudar a quantidade de RAM de uma Aplicação",
+        "operationId": "setRamTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/setRam"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{appID}/status": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Status App",
+        "description": "Obter informações de uma aplicação",
+        "operationId": "getStatusTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
           }
         }
       }
@@ -445,635 +682,6 @@
     }
   ],
   "components": {
-    "schemas": {
-      "commitApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "statusCode":{
-            "type": "number",
-            "example": 200
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "stopApps": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "type": "object",
-            "properties": {
-              "stoped": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "alreadyOffline": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "alreadyInProcess": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "restartApps": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "type": "object",
-            "properties": {
-              "restarted": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "restartedApps": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "alreadyOffline": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "sApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "startApps": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "type": "object",
-            "properties": {
-              "started": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "alreadyOnline": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "alreadyInProcess": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "setLocale": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "locale:": {
-            "type": "string",
-            "enum": [
-              "pt-BR",
-              "en-US"
-            ]
-          }
-        }
-      },
-      "getBackupApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "backups": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Backup"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Backups"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "Backup": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          }
-        }
-      },
-      "Backups": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "url": {
-            "type": "string"
-          }
-        }
-      },
-      "getLogsApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Logs"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Logs"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "Logs": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "terminal": {
-            "type": "object",
-            "properties": {
-              "big": {
-                "type": "string",
-                "description": "Logs da Aplicação"
-              },
-              "small": {
-                "type": "string",
-                "description": "Logs da Aplicação (versão pequena)"
-              },
-              "url": {
-                "type": "string",
-                "description": "Url para ver os logs via site"
-              }
-            }
-          }
-        }
-      },
-      "getStatusApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/StatusApp"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/StatusApp"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "StatusApp": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "container": {
-            "type": "string",
-            "enum": [
-              "Online",
-              "Offline"
-            ]
-          },
-          "cpu": {
-            "type": "string",
-            "example": "0.00%"
-          },
-          "memory": {
-            "type": "string",
-            "example": "54.3MB/512MB"
-          },
-          "ssd": {
-            "type": "string",
-            "example": "522MB"
-          },
-          "netIO": {
-            "type": "object",
-            "properties": {
-              "down": {
-                "type": "string",
-                "example": "11MB"
-              },
-              "up": {
-                "type": "string",
-                "example": "1MB"
-              }
-            }
-          },
-          "last_restart": {
-            "type": "string",
-            "example": "17 hours"
-          },
-          "startedAt": {
-            "type": "string",
-            "example": "2022-08-24T23:19:45.675037702Z"
-          }
-        }
-      },
-      "getApp": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "apps": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/App"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/App"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "App": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "online": {
-            "type": "boolean"
-          },
-          "ramKilled": {
-            "type": "boolean",
-            "example": false
-          },
-          "ram": {
-            "type": "integer",
-            "example": 512
-          },
-          "mainFile": {
-            "type": "string"
-          },
-          "lang": {
-            "type": "string",
-            "enum": [
-              "javascript",
-              "python",
-              "java",
-              "ruby",
-              "go",
-              "typescript",
-              "rust",
-              "html",
-              "php"
-            ]
-          },
-          "mods": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "autoDeployGit": {
-            "type": "string"
-          },
-          "autoRestart": {
-            "type": "boolean"
-          }
-        }
-      },
-      "Upload": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "statusCode": {
-            "type": "number",
-            "example": 200
-          },
-          "message": {
-            "type": "string"
-          },
-          "app": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "bot",
-                  "site"
-                ]
-              },
-              "name": {
-                "type": "string"
-              },
-              "avatarURL": {
-                "type": "string"
-              },
-              "ram": {
-                "type": "integer",
-                "example": 100
-              },
-              "mainFile": {
-                "type": "string"
-              },
-              "lang": {
-                "type": "string",
-                "enum": [
-                  "javascript",
-                  "python",
-                  "java",
-                  "ruby",
-                  "go",
-                  "typescript",
-                  "rust",
-                  "html",
-                  "php"
-                ]
-              },
-              "version": {
-                "type": "string"
-              },
-              "addedAtTimestamp": {
-                "type": "integer",
-                "example": 1661433861026
-              },
-              "autoRestart": {
-                "type": "boolean"
-              }
-            }
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok",
-              "error"
-            ]
-          },
-          "message": {
-            "type": "string"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "userID": {
-                "type": "string"
-              },
-              "totalRamMb": {
-                "type": "integer",
-                "example": 100
-              },
-              "ramUsedMb": {
-                "type": "integer",
-                "example": 100
-              },
-              "subdomains": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "customdomains": {
-                "type": "array",
-                "items": {}
-              },
-              "apps": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "appsStatus": {
-                "type": "object",
-                "example": {
-                  "string": {
-                    "online": true,
-                    "ramKilled": false,
-                    "exitCode": 0
-                  }
-                },
-                "additionalProperties": true
-              },
-              "plan": {
-                "type": "string",
-                "enum": [
-                  "Free",
-                  "Carbon",
-                  "Gold",
-                  "Platinum",
-                  "Diamond",
-                  "Ruby",
-                  "Sapphire",
-                  "Krypton",
-                  "Special",
-                  "Booster"
-                ]
-              },
-              "locale": {
-                "type": "string",
-                "enum": [
-                  "pt-BR",
-                  "en-US"
-                ]
-              },
-              "lastDataLeft": {
-                "type": "object",
-                "properties": {
-                  "days": {
-                    "type": "integer"
-                  },
-                  "hours": {
-                    "type": "integer"
-                  },
-                  "minutes": {
-                    "type": "integer"
-                  },
-                  "seconds": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "days",
-                  "hours",
-                  "minutes",
-                  "seconds"
-                ],
-                "additionalProperties": false
-              },
-              "planDataEnd": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "userID",
-              "totalRamMb",
-              "ramUsedMb",
-              "subdomains",
-              "customdomains",
-              "apps",
-              "appsStatus",
-              "plan",
-              "locale",
-              "lastDataLeft",
-              "planDataEnd"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "additionalProperties": false,
-        "required": [
-          "status",
-          "message",
-          "user"
-        ]
-      }
-    },
     "requestBodies": {
       "sendFile": {
         "content": {
@@ -1105,6 +713,41 @@
                 "ramMB": {
                   "type": "number",
                   "minimum": 100
+                }
+              }
+            }
+          }
+        }
+      },
+      "teamManager": {
+        "description": "Perms:[\"start_app\",\"stop_app\",\"restart_app\",\"logs_app\",\"commit_app\",\"edit_ram\",\"backup_app\",\"status_app\"] ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "modID",
+                "perms"
+              ],
+              "type": "object",
+              "properties": {
+                "modID": {
+                  "type": "string"
+                },
+                "perms": {
+                  "type": "array",
+                  "items":{
+                    "type": "string",
+                    "enum": [
+                      "start_app",
+                      "stop_app",
+                      "restart_app",
+                      "logs_app",
+                      "commit_app",
+                      "edit_ram",
+                      "backup_app",
+                      "status_app"
+                    ]
+                  }
                 }
               }
             }
