@@ -501,7 +501,18 @@
         ],
         "summary": "Iniciar Aplicação",
         "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
-        "operationId": "getTeam",
+        "operationId": "startTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
@@ -516,7 +527,18 @@
         ],
         "summary": "Reiniciar Aplicação",
         "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
-        "operationId": "getTeam",
+        "operationId": "restartTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
@@ -531,7 +553,18 @@
         ],
         "summary": "Parar aplicação",
         "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
-        "operationId": "getTeam",
+        "operationId": "stopTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "description": "ID da Aplicação ou \"all\" (sem apas) para ver tudos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
