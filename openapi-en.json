@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Discloud API",
-    "description": "Bem Vindo á API da DisCloud!",
+    "description": "Welcome to the DisCloud API!",
     "termsOfService": "https://discloudbot.com/legal/terms",
     "version": "v2"
   },
@@ -259,7 +259,7 @@
           "App"
         ],
         "summary": "App Stop",
-        "description": "Stop an aplicação",
+        "description": "Stop an application",
         "operationId": "stopApp",
         "parameters": [
           {
@@ -368,7 +368,7 @@
         "tags": [
           "Team Manager"
         ],
-        "summary": "Obter App Team",
+        "summary": "Get App Team",
         "description": "Get team information from an application",
         "operationId": "getTeamApp",
         "parameters": [
