@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Discloud API",
-    "description": "Welcome to the DisCloud API!",
+    "description": "Welcome to the DisCloud API! Feel free to query and try out all the routes of our API on this page!",
     "termsOfService": "https://discloudbot.com/legal/terms",
     "version": "v2"
   },
@@ -79,7 +79,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -105,7 +105,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -131,7 +131,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -157,7 +157,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -213,7 +213,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -239,7 +239,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -265,7 +265,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -349,7 +349,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -500,13 +500,13 @@
           "Team"
         ],
         "summary": "App Start",
-        "description": "Application ID or \"all\" (without quotes) to see all apps",
+        "description": "Application ID or \"all\" (without quotes) for all apps",
         "operationId": "startTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -526,13 +526,13 @@
           "Team"
         ],
         "summary": "App Restart",
-        "description": "Application ID or \"all\" (without quotes) to see all apps",
+        "description": "Application ID or \"all\" (without quotes) for all apps",
         "operationId": "restartTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -552,13 +552,13 @@
           "Team"
         ],
         "summary": "App Stop",
-        "description": "Application ID or \"all\" (without quotes) to see all apps",
+        "description": "Application ID or \"all\" (without quotes) for all apps",
         "operationId": "stopTeamApp",
         "parameters": [
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -613,7 +613,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -639,7 +639,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
@@ -694,7 +694,7 @@
           {
             "name": "appID",
             "in": "path",
-            "description": "Application ID or \"all\" (without quotes) to see all apps",
+            "description": "Application ID or \"all\" (without quotes) for all apps",
             "required": true,
             "schema": {
               "type": "string"
