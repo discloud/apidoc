@@ -363,6 +363,32 @@
         }
       }
     },
+    "/app/{all}/getApps": {
+      "delete": {
+        "tags": [
+          "App"
+        ],
+        "summary": "List all apps",
+        "description": "List all apps",
+        "operationId": "getApps",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "path",
+            "description": "Just the parameter \"all\" (without quotes) and support, this route returns id and name of all apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
     "/app/{appID}/team": {
       "get": {
         "tags": [
@@ -487,6 +513,32 @@
         "summary": "Get Team Apps",
         "description": "Get all Team applications that the token owner has access to",
         "operationId": "getTeam",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{ownerID}/getMods": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Get All Your Moderators",
+        "description": "Get all moderators you have registered",
+        "operationId": "getMods",
+        "parameters": [
+          {
+            "name": "ownerID",
+            "in": "path",
+            "description": "App Owner ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"

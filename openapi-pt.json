@@ -363,6 +363,32 @@
         }
       }
     },
+    "/app/{all}/getApps": {
+      "delete": {
+        "tags": [
+          "App"
+        ],
+        "summary": "Lista todos apps",
+        "description": "Lista todos apps",
+        "operationId": "getApps",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "path",
+            "description": "Apenas o parâmetro \"all\" (sem aspas) é suportar, essa rota retorna id e nome de todos os apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
     "/app/{appID}/team": {
       "get": {
         "tags": [
@@ -487,6 +513,32 @@
         "summary": "Obter Team Apps",
         "description": "Obter todas as aplicações Team que o proprietário do token tem acesso",
         "operationId": "getTeam",
+        "parameters": [
+          {
+            "name": "ownerID",
+            "in": "path",
+            "description": "ID do dono do app",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/team/{ownerID}/getMods": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Obter Todos seus moderadores",
+        "description": "Obter todos os moderadores que você tenha registrado",
+        "operationId": "getMods",
         "responses": {
           "200": {
             "description": "Successful operation"
