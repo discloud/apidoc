@@ -539,6 +539,17 @@
         "summary": "Obter Todos seus moderadores",
         "description": "Obter todos os moderadores que você tenha registrado",
         "operationId": "getMods",
+        "parameters": [
+          {
+            "name": "ownerID",
+            "in": "path",
+            "description": "ID da dono dos apps",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation"
