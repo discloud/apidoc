@@ -1920,7 +1920,7 @@
     },
     "/app/{appID}/explorer": {
       "get": {
-        "tags": ["Applications"],
+        "tags": ["Aplicações"],
         "summary": "Listar arquivos e pastas",
         "description": "Lista arquivos e pastas no diretório da aplicação",
         "operationId": "listExplorer",
@@ -1988,7 +1988,7 @@
         }
       },
       "post": {
-        "tags": ["Applications"],
+        "tags": ["Aplicações"],
         "summary": "Criar arquivo ou pasta",
         "description": "Cria um novo arquivo ou pasta na aplicação",
         "operationId": "createExplorer",
@@ -2069,7 +2069,7 @@
     },
     "/app/{appID}/explorer/open": {
       "get": {
-        "tags": ["Applications"],
+        "tags": ["Aplicações"],
         "summary": "Abrir/ler arquivo",
         "description": "Lê o conteúdo de um arquivo na aplicação",
         "operationId": "openExplorer",
@@ -2139,7 +2139,7 @@
     },
     "/app/{appID}/explorer/edit": {
       "put": {
-        "tags": ["Applications"],
+        "tags": ["Aplicações"],
         "summary": "Editar arquivo",
         "description": "Edita o conteúdo de um arquivo na aplicação",
         "operationId": "editExplorer",
@@ -2220,7 +2220,7 @@
     },
     "/app/{appID}/exec": {
       "put": {
-        "tags": ["Applications"],
+        "tags": ["Aplicações"],
         "summary": "Executar comando no container",
         "description": "Executa um comando dentro do container da aplicação",
         "operationId": "execCommand",
