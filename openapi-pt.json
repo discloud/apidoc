@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Discloud API",
-    "description": "Bem Vindo à API da DisCloud!\nSinta-se à vontade para consultar e experimentar todas as rotas da nossa API nesta página!",
+    "description": "Bem Vindo à API da DisCloud! Sinta-se à vontade para consultar e experimentar todas as rotas da nossa API nesta página!",
     "termsOfService": "https://discloudbot.com/legal/terms",
     "version": "2.0.0",
     "contact": {
@@ -14,7 +14,7 @@
   "servers": [
     {
       "url": "https://api.discloud.app/v2",
-      "description": "Servidor de API de Produção"
+      "description": "Servidor API"
     }
   ],
   "components": {
@@ -779,10 +779,6 @@
     {
       "name": "Membro da Equipe",
       "description": "Operações sobre membros da equipe"
-    },
-    {
-      "name": "Explorer",
-      "description": "Operações de exploração de arquivos do contêiner"
     }
   ],
   "paths": {
@@ -1924,7 +1920,7 @@
     },
     "/app/{appID}/explorer": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": ["Aplicações"],
         "summary": "Listar arquivos e pastas",
         "description": "Lista arquivos e pastas no diretório da aplicação",
         "operationId": "listExplorer",
@@ -1992,7 +1988,7 @@
         }
       },
       "post": {
-        "tags": ["Explorer"],
+        "tags": ["Aplicações"],
         "summary": "Criar arquivo ou pasta",
         "description": "Cria um novo arquivo ou pasta na aplicação",
         "operationId": "createExplorer",
@@ -2073,7 +2069,7 @@
     },
     "/app/{appID}/explorer/open": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": ["Aplicações"],
         "summary": "Abrir/ler arquivo",
         "description": "Lê o conteúdo de um arquivo na aplicação",
         "operationId": "openExplorer",
@@ -2143,7 +2139,7 @@
     },
     "/app/{appID}/explorer/edit": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": ["Aplicações"],
         "summary": "Editar arquivo",
         "description": "Edita o conteúdo de um arquivo na aplicação",
         "operationId": "editExplorer",
@@ -2224,7 +2220,7 @@
     },
     "/app/{appID}/exec": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": ["Aplicações"],
         "summary": "Executar comando no container",
         "description": "Executa um comando dentro do container da aplicação",
         "operationId": "execCommand",
@@ -2508,7 +2504,7 @@
         }
       },
       "post": {
-        "tags": ["Aplicações"],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Adicionar membro à equipe",
         "description": "Adiciona um novo membro à equipe de uma aplicação com permissões especificadas",
         "operationId": "addAppTeamMember",
@@ -2664,7 +2660,7 @@
         }
       },
       "put": {
-        "tags": ["Aplicações"],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Atualizar permissões do membro da equipe",
         "description": "Atualiza as permissões de um membro da equipe existente de uma aplicação",
         "operationId": "updateAppTeamMember",
@@ -2996,6 +2992,273 @@
                   "status": "error",
                   "message": "Você não está em nenhuma equipe de aplicativo",
                   "apps": []
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/backup": {
+      "get": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Obter backup da aplicação como membro da equipe",
+        "description": "Gera e recupera backup para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "getTeamAppBackup",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para gerar backup",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Backup da aplicação gerado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "backups": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "O backup da sua aplicação será gerado com sucesso",
+                  "backups": {
+                    "id": "1745287471226",
+                    "url": "https://discloud.app/backup/276406526fb8229ae090c92fddcfedd74aa722ea4d3eb6b12da6540e5d82a30a.zip"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
+                    },
+                    "summary": "Sem permissão para backup"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/status": {
+      "get": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Obter status da aplicação como membro da equipe",
+        "description": "Recupera informações de status para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "getTeamAppStatus",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para obter status",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status da aplicação obtido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "apps": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "container": {
+                          "type": "string"
+                        },
+                        "cpu": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "string"
+                        },
+                        "ssd": {
+                          "type": "string"
+                        },
+                        "netIO": {
+                          "type": "object",
+                          "properties": {
+                            "down": {
+                              "type": "string"
+                            },
+                            "up": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "last_restart": {
+                          "type": "string"
+                        },
+                        "startedAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "O status das suas aplicações foi carregado",
+                  "apps": {
+                    "id": "1745287471226",
+                    "container": "Online",
+                    "cpu": "0.00%",
+                    "memory": "22.5MB/100MB",
+                    "ssd": "2GB",
+                    "netIO": {
+                      "down": "42KB",
+                      "up": "5KB"
+                    },
+                    "last_restart": "um minuto",
+                    "startedAt": "2025-04-22T20:01:36.77032131Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
+                    },
+                    "summary": "Sem permissão para status"
+                  }
                 }
               }
             }
@@ -3475,122 +3738,6 @@
         }
       }
     },
-    "/team/{appID}/backup": {
-      "get": {
-        "tags": ["Membro da Equipe"],
-        "summary": "Obter backup da aplicação como membro da equipe",
-        "description": "Gera e recupera backup para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "getTeamAppBackup",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para gerar backup",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Backup da aplicação gerado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "backups": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "O backup da sua aplicação será gerado com sucesso",
-                  "backups": {
-                    "id": "1745287471226",
-                    "url": "https://discloud.app/backup/276406526fb8229ae090c92fddcfedd74aa722ea4d3eb6b12da6540e5d82a30a.zip"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
-                    },
-                    "summary": "Sem permissão para backup"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/team/{appID}/ram": {
       "put": {
         "tags": ["Membro da Equipe"],
@@ -3732,157 +3879,6 @@
                       "message": "Você não está em nenhuma equipe de aplicativo"
                     },
                     "summary": "Sem permissão para editar RAM"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/status": {
-      "get": {
-        "tags": ["Membro da Equipe"],
-        "summary": "Obter status da aplicação como membro da equipe",
-        "description": "Recupera informações de status para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "getTeamAppStatus",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para obter status",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Status da aplicação obtido com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "apps": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "container": {
-                          "type": "string"
-                        },
-                        "cpu": {
-                          "type": "string"
-                        },
-                        "memory": {
-                          "type": "string"
-                        },
-                        "ssd": {
-                          "type": "string"
-                        },
-                        "netIO": {
-                          "type": "object",
-                          "properties": {
-                            "down": {
-                              "type": "string"
-                            },
-                            "up": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "last_restart": {
-                          "type": "string"
-                        },
-                        "startedAt": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "O status das suas aplicações foi carregado",
-                  "apps": {
-                    "id": "1745287471226",
-                    "container": "Online",
-                    "cpu": "0.00%",
-                    "memory": "22.5MB/100MB",
-                    "ssd": "2GB",
-                    "netIO": {
-                      "down": "42KB",
-                      "up": "5KB"
-                    },
-                    "last_restart": "um minuto",
-                    "startedAt": "2025-04-22T20:01:36.77032131Z"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
-                    },
-                    "summary": "Sem permissão para status"
                   }
                 }
               }

@@ -14,7 +14,7 @@
   "servers": [
     {
       "url": "https://api.discloud.app/v2",
-      "description": "Production API server"
+      "description": "API Server"
     }
   ],
   "components": {
@@ -184,7 +184,7 @@
           },
           "avatarURL": {
             "type": "string",
-            "description": "URL to the application\u0027s avatar image"
+            "description": "URL to the application's avatar image"
           },
           "name": {
             "type": "string",
@@ -674,7 +674,7 @@
         "properties": {
           "avatarURL": {
             "type": "string",
-            "description": "URL to the application\u0027s avatar image",
+            "description": "URL to the application's avatar image",
             "example": "https://i.ibb.co/0yJhZw92/Uma01.png"
           },
           "name": {
@@ -882,10 +882,6 @@
     {
       "name": "Team Member",
       "description": "Operations about team members"
-    },
-    {
-      "name": "Explorer",
-      "description": "Operations for file and directory management"
     }
   ],
   "paths": {
@@ -958,7 +954,7 @@
       "put": {
         "tags": ["User"],
         "summary": "Update user locale",
-        "description": "Updates the user\u0027s preferred language/locale",
+        "description": "Updates the user's preferred language/locale",
         "operationId": "updateUserLocale",
         "parameters": [
           {
@@ -2027,7 +2023,7 @@
     },
     "/app/{appID}/explorer": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": ["Applications"],
         "summary": "List files and directories",
         "description": "List files and directories in the application's directory",
         "operationId": "listExplorer",
@@ -2095,7 +2091,7 @@
         }
       },
       "post": {
-        "tags": ["Explorer"],
+        "tags": ["Applications"],
         "summary": "Create file or directory",
         "description": "Create a new file or directory in the application",
         "operationId": "createExplorer",
@@ -2176,7 +2172,7 @@
     },
     "/app/{appID}/explorer/open": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": ["Applications"],
         "summary": "Open/read file",
         "description": "Read the contents of a file in the application",
         "operationId": "openExplorer",
@@ -2246,7 +2242,7 @@
     },
     "/app/{appID}/explorer/edit": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": ["Applications"],
         "summary": "Edit file",
         "description": "Edit the contents of a file in the application",
         "operationId": "editExplorer",
@@ -2327,7 +2323,7 @@
     },
     "/app/{appID}/exec": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": ["Applications"],
         "summary": "Execute command in container",
         "description": "Execute a command inside the application container",
         "operationId": "execCommand",
@@ -2611,7 +2607,7 @@
         }
       },
       "post": {
-        "tags": ["Applications"],
+        "tags": ["Team Management"],
         "summary": "Add team member",
         "description": "Adds a new team member to an application with specified permissions",
         "operationId": "addAppTeamMember",
@@ -2767,7 +2763,7 @@
         }
       },
       "put": {
-        "tags": ["Applications"],
+        "tags": ["Team Management"],
         "summary": "Update team member permissions",
         "description": "Updates permissions for an existing team member of an application",
         "operationId": "updateAppTeamMember",
@@ -3106,478 +3102,6 @@
         }
       }
     },
-    "/team/{appID}/start": {
-      "put": {
-        "tags": ["Team Member"],
-        "summary": "Start application as team member",
-        "description": "Starts an application that the authenticated user has team member access to",
-        "operationId": "startTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to start",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Application start response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "message": "Its application was connected."
-                    },
-                    "summary": "Application started successfully"
-                  },
-                  "alreadyRunning": {
-                    "value": {
-                      "status": "error",
-                      "message": "Its application is already on."
-                    },
-                    "summary": "Application already running"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
-                    },
-                    "summary": "No start permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/restart": {
-      "put": {
-        "tags": ["Team Member"],
-        "summary": "Restart application as team member",
-        "description": "Restarts an application that the authenticated user has team member access to",
-        "operationId": "restartTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to restart",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Application restart response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "Its application was restarted."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
-                    },
-                    "summary": "No restart permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/stop": {
-      "put": {
-        "tags": ["Team Member"],
-        "summary": "Stop application as team member",
-        "description": "Stops an application that the authenticated user has team member access to",
-        "operationId": "stopTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to stop",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Application stop response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "message": "Its application was off."
-                    },
-                    "summary": "Application stopped successfully"
-                  },
-                  "alreadyStopped": {
-                    "value": {
-                      "status": "error",
-                      "message": "Its application is already off."
-                    },
-                    "summary": "Application already stopped"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
-                    },
-                    "summary": "No stop permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/commit": {
-      "put": {
-        "tags": ["Team Member"],
-        "summary": "Update application code as team member",
-        "description": "Updates an existing application by uploading a new version of the code as a team member",
-        "operationId": "commitTeamAppChanges",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to update",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": ["file"],
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "Application file to upload (.ZIP format)"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Commit response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "statusCode": 200,
-                  "message": "The files of your application have been successfully updated."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You are not on any app team"
-                    },
-                    "summary": "No commit permission"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Missing required file",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "error",
-                  "message": "Mandatory File"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/team/{appID}/backup": {
       "get": {
         "tags": ["Team Member"],
@@ -3676,165 +3200,16 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No backup permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/ram": {
-      "put": {
-        "tags": ["Team Member"],
-        "summary": "Update application RAM as team member",
-        "description": "Updates the RAM allocation for an application that the authenticated user has team member access to",
-        "operationId": "updateTeamAppRam",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to update RAM for",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppRamUpdateRequest"
-              },
-              "example": {
-                "ramMB": 200
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "RAM update response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "ram": {
-                      "type": "object",
-                      "properties": {
-                        "totalRamOwner": {
-                          "type": "integer"
-                        },
-                        "totalUsedRamOwner": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "statusCode": 200,
-                      "message": "A memória do seu aplicativo foi alterada com sucesso.",
-                      "ram": {
-                        "totalRamOwner": 16384,
-                        "totalUsedRamOwner": 3386
-                      }
-                    },
-                    "summary": "RAM updated successfully"
-                  },
-                  "insufficientRam": {
-                    "value": {
-                      "status": "error",
-                      "message": "You can not put 14000 mb of RAM in your application, only you have 13098 mb of memory RAM.",
-                      "ram": {
-                        "totalRamOwner": 16384,
-                        "totalUsedRamOwner": 3386
-                      }
-                    },
-                    "summary": "Insufficient available RAM"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You are not on any app team"
-                    },
-                    "summary": "No RAM edit permission"
                   }
                 }
               }
@@ -3976,16 +3351,637 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No status permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/start": {
+      "put": {
+        "tags": ["Team Member"],
+        "summary": "Start application as team member",
+        "description": "Starts an application that the authenticated user has team member access to",
+        "operationId": "startTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to start",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application start response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "message": "Its application was connected."
+                    },
+                    "summary": "Application started successfully"
+                  },
+                  "alreadyRunning": {
+                    "value": {
+                      "status": "error",
+                      "message": "Its application is already on."
+                    },
+                    "summary": "Application already running"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 1745287471226"
+                    },
+                    "summary": "No start permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/restart": {
+      "put": {
+        "tags": ["Team Member"],
+        "summary": "Restart application as team member",
+        "description": "Restarts an application that the authenticated user has team member access to",
+        "operationId": "restartTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to restart",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application restart response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "Its application was restarted."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 1745287471226"
+                    },
+                    "summary": "No restart permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/stop": {
+      "put": {
+        "tags": ["Team Member"],
+        "summary": "Stop application as team member",
+        "description": "Stops an application that the authenticated user has team member access to",
+        "operationId": "stopTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to stop",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application stop response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "message": "Its application was off."
+                    },
+                    "summary": "Application stopped successfully"
+                  },
+                  "alreadyStopped": {
+                    "value": {
+                      "status": "error",
+                      "message": "Its application is already off."
+                    },
+                    "summary": "Application already stopped"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 1745287471226"
+                    },
+                    "summary": "No stop permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/commit": {
+      "put": {
+        "tags": ["Team Member"],
+        "summary": "Update application code as team member",
+        "description": "Updates an existing application by uploading a new version of the code as a team member",
+        "operationId": "commitTeamAppChanges",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Application file to upload (.ZIP format)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Commit response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "statusCode": 200,
+                  "message": "The files of your application have been successfully updated."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You are not on any app team"
+                    },
+                    "summary": "No commit permission"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing required file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Mandatory File"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/ram": {
+      "put": {
+        "tags": ["Team Member"],
+        "summary": "Update application RAM as team member",
+        "description": "Updates the RAM allocation for an application that the authenticated user has team member access to",
+        "operationId": "updateTeamAppRam",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to update RAM for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppRamUpdateRequest"
+              },
+              "example": {
+                "ramMB": 200
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "RAM update response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "ram": {
+                      "type": "object",
+                      "properties": {
+                        "totalRamOwner": {
+                          "type": "integer"
+                        },
+                        "totalUsedRamOwner": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "statusCode": 200,
+                      "message": "A memória do seu aplicativo foi alterada com sucesso.",
+                      "ram": {
+                        "totalRamOwner": 16384,
+                        "totalUsedRamOwner": 3386
+                      }
+                    },
+                    "summary": "RAM updated successfully"
+                  },
+                  "insufficientRam": {
+                    "value": {
+                      "status": "error",
+                      "message": "You can not put 14000 mb of RAM in your application, only you have 13098 mb of memory RAM.",
+                      "ram": {
+                        "totalRamOwner": 16384,
+                        "totalUsedRamOwner": 3386
+                      }
+                    },
+                    "summary": "Insufficient available RAM"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You are not on any app team"
+                    },
+                    "summary": "No RAM edit permission"
                   }
                 }
               }
