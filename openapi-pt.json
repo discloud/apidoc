@@ -2574,7 +2574,7 @@
       },
       "post": {
         "tags": [
-          "Aplicações"
+          "Gerenciamento de Equipe"
         ],
         "summary": "Adicionar membro à equipe",
         "description": "Adiciona um novo membro à equipe de uma aplicação com permissões especificadas",
@@ -2732,7 +2732,7 @@
       },
       "put": {
         "tags": [
-          "Aplicações"
+          "Gerenciamento de Equipe"
         ],
         "summary": "Atualizar permissões do membro da equipe",
         "description": "Atualiza as permissões de um membro da equipe existente de uma aplicação",
