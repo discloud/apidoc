@@ -14,7 +14,7 @@
   "servers": [
     {
       "url": "https://api.discloud.app/v2",
-      "description": "Production API server"
+      "description": "API Server"
     }
   ],
   "components": {
@@ -3102,6 +3102,273 @@
         }
       }
     },
+    "/team/{appID}/backup": {
+      "get": {
+        "tags": ["Team Member"],
+        "summary": "Get application backup as team member",
+        "description": "Generates and retrieves backup for an application that the authenticated user has team member access to",
+        "operationId": "getTeamAppBackup",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to generate backup for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application backup generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "backups": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "The backup of your application will be generated successfully",
+                  "backups": {
+                    "id": "1745287471226",
+                    "url": "https://discloud.app/backup/276406526fb8229ae090c92fddcfedd74aa722ea4d3eb6b12da6540e5d82a30a.zip"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 1745287471226"
+                    },
+                    "summary": "No backup permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/status": {
+      "get": {
+        "tags": ["Team Member"],
+        "summary": "Get application status as team member",
+        "description": "Retrieves status information for an application that the authenticated user has team member access to",
+        "operationId": "getTeamAppStatus",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID of the application to get status for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "apps": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "container": {
+                          "type": "string"
+                        },
+                        "cpu": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "string"
+                        },
+                        "ssd": {
+                          "type": "string"
+                        },
+                        "netIO": {
+                          "type": "object",
+                          "properties": {
+                            "down": {
+                              "type": "string"
+                            },
+                            "up": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "last_restart": {
+                          "type": "string"
+                        },
+                        "startedAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "The status of your applications were loaded",
+                  "apps": {
+                    "id": "1745287471226",
+                    "container": "Online",
+                    "cpu": "0.00%",
+                    "memory": "22.5MB/100MB",
+                    "ssd": "2GB",
+                    "netIO": {
+                      "down": "42KB",
+                      "up": "5KB"
+                    },
+                    "last_restart": "a minute",
+                    "startedAt": "2025-04-22T20:01:36.77032131Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 17452874712261"
+                    },
+                    "summary": "Not a team member"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "You don't belong to any team of the app 1745287471226"
+                    },
+                    "summary": "No status permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/team/{appID}/start": {
       "put": {
         "tags": ["Team Member"],
@@ -3574,122 +3841,6 @@
         }
       }
     },
-    "/team/{appID}/backup": {
-      "get": {
-        "tags": ["Team Member"],
-        "summary": "Get application backup as team member",
-        "description": "Generates and retrieves backup for an application that the authenticated user has team member access to",
-        "operationId": "getTeamAppBackup",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to generate backup for",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Application backup generated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "backups": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "The backup of your application will be generated successfully",
-                  "backups": {
-                    "id": "1745287471226",
-                    "url": "https://discloud.app/backup/276406526fb8229ae090c92fddcfedd74aa722ea4d3eb6b12da6540e5d82a30a.zip"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don't belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don't belong to any team of the app 1745287471226"
-                    },
-                    "summary": "No backup permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/team/{appID}/ram": {
       "put": {
         "tags": ["Team Member"],
@@ -3831,157 +3982,6 @@
                       "message": "You are not on any app team"
                     },
                     "summary": "No RAM edit permission"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/status": {
-      "get": {
-        "tags": ["Team Member"],
-        "summary": "Get application status as team member",
-        "description": "Retrieves status information for an application that the authenticated user has team member access to",
-        "operationId": "getTeamAppStatus",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID of the application to get status for",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Application status retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "apps": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "container": {
-                          "type": "string"
-                        },
-                        "cpu": {
-                          "type": "string"
-                        },
-                        "memory": {
-                          "type": "string"
-                        },
-                        "ssd": {
-                          "type": "string"
-                        },
-                        "netIO": {
-                          "type": "object",
-                          "properties": {
-                            "down": {
-                              "type": "string"
-                            },
-                            "up": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "last_restart": {
-                          "type": "string"
-                        },
-                        "startedAt": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "The status of your applications were loaded",
-                  "apps": {
-                    "id": "1745287471226",
-                    "container": "Online",
-                    "cpu": "0.00%",
-                    "memory": "22.5MB/100MB",
-                    "ssd": "2GB",
-                    "netIO": {
-                      "down": "42KB",
-                      "up": "5KB"
-                    },
-                    "last_restart": "a minute",
-                    "startedAt": "2025-04-22T20:01:36.77032131Z"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Block"
-                    },
-                    "summary": "No token provided"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Please provide a valid token"
-                    },
-                    "summary": "Invalid token provided"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authorization error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don't belong to any team of the app 17452874712261"
-                    },
-                    "summary": "Not a team member"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "You don't belong to any team of the app 1745287471226"
-                    },
-                    "summary": "No status permission"
                   }
                 }
               }

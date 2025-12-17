@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Discloud API",
-    "description": "Bem Vindo à API da DisCloud!\nSinta-se à vontade para consultar e experimentar todas as rotas da nossa API nesta página!",
+    "description": "Bem Vindo à API da DisCloud! Sinta-se à vontade para consultar e experimentar todas as rotas da nossa API nesta página!",
     "termsOfService": "https://discloudbot.com/legal/terms",
     "version": "2.0.0",
     "contact": {
@@ -14,7 +14,7 @@
   "servers": [
     {
       "url": "https://api.discloud.app/v2",
-      "description": "Servidor de API de Produção"
+      "description": "Servidor API"
     }
   ],
   "components": {
@@ -143,10 +143,7 @@
           },
           "locale": {
             "type": "string",
-            "enum": [
-              "pt-BR",
-              "en-US"
-            ]
+            "enum": ["pt-BR", "en-US"]
           }
         }
       },
@@ -475,9 +472,7 @@
       },
       "AppRamUpdateRequest": {
         "type": "object",
-        "required": [
-          "ramMB"
-        ],
+        "required": ["ramMB"],
         "properties": {
           "ramMB": {
             "type": "integer",
@@ -547,10 +542,7 @@
       },
       "TeamMemberAddRequest": {
         "type": "object",
-        "required": [
-          "modID",
-          "perms"
-        ],
+        "required": ["modID", "perms"],
         "properties": {
           "modID": {
             "type": "string",
@@ -678,10 +670,7 @@
       },
       "AppProfileUpdateRequest": {
         "type": "object",
-        "required": [
-          "avatarURL",
-          "name"
-        ],
+        "required": ["avatarURL", "name"],
         "properties": {
           "avatarURL": {
             "type": "string",
@@ -717,9 +706,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "cmd"
-        ]
+        "required": ["cmd"]
       },
       "ExecOutput": {
         "properties": {
@@ -797,9 +784,7 @@
   "paths": {
     "/user": {
       "get": {
-        "tags": [
-          "Usuário"
-        ],
+        "tags": ["Usuário"],
         "summary": "Obter informações do usuário atual",
         "description": "Retorna informações sobre o usuário autenticado",
         "operationId": "getCurrentUser",
@@ -818,15 +803,9 @@
                     "userID": "803658045736878080",
                     "totalRamMb": 16384,
                     "ramUsedMb": 3386,
-                    "subdomains": [
-                      "exemplo"
-                    ],
-                    "customdomains": [
-                      "example.discloud.com"
-                    ],
-                    "apps": [
-                      "1719010867306"
-                    ],
+                    "subdomains": ["exemplo"],
+                    "customdomains": ["example.discloud.com"],
+                    "apps": ["1719010867306"],
                     "plan": "Safira",
                     "locale": "pt-BR",
                     "lastDataLeft": {
@@ -870,9 +849,7 @@
     },
     "/locale/{locale}": {
       "put": {
-        "tags": [
-          "Usuário"
-        ],
+        "tags": ["Usuário"],
         "summary": "Atualizar local do usuário",
         "description": "Atualiza o idioma preferido do usuário",
         "operationId": "updateUserLocale",
@@ -884,10 +861,7 @@
             "description": "O idioma a ser definido para o usuário",
             "schema": {
               "type": "string",
-              "enum": [
-                "pt-BR",
-                "en-US"
-              ]
+              "enum": ["pt-BR", "en-US"]
             }
           }
         ],
@@ -934,10 +908,7 @@
                 "example": {
                   "status": "error",
                   "message": "A tradução para a linguagem fr-FR ainda não existe.",
-                  "localeList": [
-                    "pt-BR",
-                    "en-US"
-                  ]
+                  "localeList": ["pt-BR", "en-US"]
                 }
               }
             }
@@ -947,9 +918,7 @@
     },
     "/upload": {
       "post": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Fazer upload da aplicação",
         "description": "Faz upload de uma nova aplicação para a Discloud",
         "operationId": "uploadApplication",
@@ -959,9 +928,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "file"
-                ],
+                "required": ["file"],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1063,9 +1030,7 @@
     },
     "/app/{appID}": {
       "get": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Obter informações da aplicação",
         "description": "Recupera informações sobre uma aplicação específica ou todas as aplicações",
         "operationId": "getAppInfo",
@@ -1153,9 +1118,7 @@
     },
     "/app/{appID}/status": {
       "get": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Obter status da aplicação",
         "description": "Recupera informações de status sobre uma aplicação específica ou todas as aplicações",
         "operationId": "getAppStatus",
@@ -1241,9 +1204,7 @@
     },
     "/app/{appID}/logs": {
       "get": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Obter logs da aplicação",
         "description": "Recupera os logs de uma aplicação específica ou de todas as aplicações",
         "operationId": "getAppLogs",
@@ -1324,9 +1285,7 @@
     },
     "/app/{appID}/backup": {
       "get": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Obter backup da aplicação",
         "description": "Gera e recupera o backup de uma aplicação específica ou de todas as aplicações",
         "operationId": "getAppBackup",
@@ -1403,9 +1362,7 @@
     },
     "/app/{appID}/start": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Iniciar aplicação",
         "description": "Inicia uma aplicação específica ou todas as aplicações",
         "operationId": "startApp",
@@ -1499,9 +1456,7 @@
     },
     "/app/{appID}/restart": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Reiniciar aplicação",
         "description": "Reinicia uma aplicação específica ou todas as aplicações",
         "operationId": "restartApp",
@@ -1574,9 +1529,7 @@
     },
     "/app/{appID}/stop": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Parar aplicação",
         "description": "Para uma aplicação específica ou todas as aplicações",
         "operationId": "stopApp",
@@ -1661,9 +1614,7 @@
     },
     "/app/{appID}/ram": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Atualizar RAM da aplicação",
         "description": "Atualiza a alocação de RAM para uma aplicação específica",
         "operationId": "updateAppRam",
@@ -1774,9 +1725,7 @@
     },
     "/app/{appID}/commit": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Atualizar código da aplicação",
         "description": "Atualiza uma aplicação existente fazendo upload de uma nova versão do código",
         "operationId": "commitAppChanges",
@@ -1797,9 +1746,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "file"
-                ],
+                "required": ["file"],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1877,9 +1824,7 @@
     },
     "/app/{appID}/profile": {
       "put": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Atualizar perfil da aplicação",
         "description": "Atualiza as informações de perfil (avatar e nome) de uma aplicação específica",
         "operationId": "updateAppProfile",
@@ -1975,9 +1920,7 @@
     },
     "/app/{appID}/explorer": {
       "get": {
-        "tags": [
-          "Applications"
-        ],
+        "tags": ["Applications"],
         "summary": "Listar arquivos e pastas",
         "description": "Lista arquivos e pastas no diretório da aplicação",
         "operationId": "listExplorer",
@@ -2045,9 +1988,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Applications"
-        ],
+        "tags": ["Applications"],
         "summary": "Criar arquivo ou pasta",
         "description": "Cria um novo arquivo ou pasta na aplicação",
         "operationId": "createExplorer",
@@ -2128,9 +2069,7 @@
     },
     "/app/{appID}/explorer/open": {
       "get": {
-        "tags": [
-          "Applications"
-        ],
+        "tags": ["Applications"],
         "summary": "Abrir/ler arquivo",
         "description": "Lê o conteúdo de um arquivo na aplicação",
         "operationId": "openExplorer",
@@ -2200,9 +2139,7 @@
     },
     "/app/{appID}/explorer/edit": {
       "put": {
-        "tags": [
-          "Applications"
-        ],
+        "tags": ["Applications"],
         "summary": "Editar arquivo",
         "description": "Edita o conteúdo de um arquivo na aplicação",
         "operationId": "editExplorer",
@@ -2283,9 +2220,7 @@
     },
     "/app/{appID}/exec": {
       "put": {
-        "tags": [
-          "Applications"
-        ],
+        "tags": ["Applications"],
         "summary": "Executar comando no container",
         "description": "Executa um comando dentro do container da aplicação",
         "operationId": "execCommand",
@@ -2379,9 +2314,7 @@
     },
     "/app/{appID}/delete": {
       "delete": {
-        "tags": [
-          "Aplicações"
-        ],
+        "tags": ["Aplicações"],
         "summary": "Deletar aplicação",
         "description": "Deleta permanentemente uma aplicação",
         "operationId": "deleteApp",
@@ -2454,9 +2387,7 @@
     },
     "/app/{appID}/team": {
       "get": {
-        "tags": [
-          "Gerenciamento de Equipe"
-        ],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Obter membros da equipe da aplicação",
         "description": "Recupera a lista de membros da equipe para uma aplicação específica",
         "operationId": "getAppTeam",
@@ -2573,9 +2504,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Gerenciamento de Equipe"
-        ],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Adicionar membro à equipe",
         "description": "Adiciona um novo membro à equipe de uma aplicação com permissões especificadas",
         "operationId": "addAppTeamMember",
@@ -2731,9 +2660,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Gerenciamento de Equipe"
-        ],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Atualizar permissões do membro da equipe",
         "description": "Atualiza as permissões de um membro da equipe existente de uma aplicação",
         "operationId": "updateAppTeamMember",
@@ -2869,9 +2796,7 @@
     },
     "/app/{appID}/team/{modID}": {
       "delete": {
-        "tags": [
-          "Gerenciamento de Equipe"
-        ],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Remover membro da equipe",
         "description": "Remove um membro da equipe de uma aplicação",
         "operationId": "removeAppTeamMember",
@@ -2980,9 +2905,7 @@
     },
     "/team": {
       "get": {
-        "tags": [
-          "Membro da Equipe"
-        ],
+        "tags": ["Membro da Equipe"],
         "summary": "Obter aplicações do membro da equipe",
         "description": "Recupera a lista de aplicações que o usuário autenticado tem acesso como membro da equipe",
         "operationId": "getTeamMemberApps",
@@ -3076,493 +2999,9 @@
         }
       }
     },
-    "/team/{appID}/start": {
-      "put": {
-        "tags": [
-          "Membro da Equipe"
-        ],
-        "summary": "Iniciar aplicação como membro da equipe",
-        "description": "Inicia uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "startTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para iniciar",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Resposta de início da aplicação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "message": "Sua aplicação foi conectada."
-                    },
-                    "summary": "Aplicação iniciada com sucesso"
-                  },
-                  "alreadyRunning": {
-                    "value": {
-                      "status": "error",
-                      "message": "Sua aplicação já está ligada."
-                    },
-                    "summary": "Aplicação já está em execução"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
-                    },
-                    "summary": "Sem permissão para iniciar"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/restart": {
-      "put": {
-        "tags": [
-          "Membro da Equipe"
-        ],
-        "summary": "Reiniciar aplicação como membro da equipe",
-        "description": "Reinicia uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "restartTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para reiniciar",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Resposta de reinício da aplicação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "message": "Sua aplicação foi reiniciada."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
-                    },
-                    "summary": "Sem permissão para reiniciar"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/stop": {
-      "put": {
-        "tags": [
-          "Membro da Equipe"
-        ],
-        "summary": "Parar aplicação como membro da equipe",
-        "description": "Para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "stopTeamApp",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para parar",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Resposta de parada da aplicação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "message": "Sua aplicação foi desligada."
-                    },
-                    "summary": "Aplicação parada com sucesso"
-                  },
-                  "alreadyStopped": {
-                    "value": {
-                      "status": "error",
-                      "message": "Sua aplicação já está desligada."
-                    },
-                    "summary": "Aplicação já parada"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
-                    },
-                    "summary": "Sem permissão para parar"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team/{appID}/commit": {
-      "put": {
-        "tags": [
-          "Membro da Equipe"
-        ],
-        "summary": "Atualizar código da aplicação como membro da equipe",
-        "description": "Atualiza uma aplicação existente fazendo upload de uma nova versão do código como membro da equipe",
-        "operationId": "commitTeamAppChanges",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para atualizar",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "file"
-                ],
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "Arquivo da aplicação para fazer upload (formato .ZIP)"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Resposta de commit",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "ok",
-                  "statusCode": 200,
-                  "message": "Os arquivos da sua aplicação foram atualizados com sucesso."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não está em nenhuma equipe de aplicativo"
-                    },
-                    "summary": "Sem permissão para commit"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Arquivo obrigatório ausente",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "status": "error",
-                  "message": "Arquivo obrigatório"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/team/{appID}/backup": {
       "get": {
-        "tags": [
-          "Membro da Equipe"
-        ],
+        "tags": ["Membro da Equipe"],
         "summary": "Obter backup da aplicação como membro da equipe",
         "description": "Gera e recupera backup para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
         "operationId": "getTeamAppBackup",
@@ -3676,162 +3115,9 @@
         }
       }
     },
-    "/team/{appID}/ram": {
-      "put": {
-        "tags": [
-          "Membro da Equipe"
-        ],
-        "summary": "Atualizar RAM da aplicação como membro da equipe",
-        "description": "Atualiza a alocação de RAM para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
-        "operationId": "updateTeamAppRam",
-        "parameters": [
-          {
-            "name": "appID",
-            "in": "path",
-            "required": true,
-            "description": "ID da aplicação para atualizar RAM",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppRamUpdateRequest"
-              },
-              "example": {
-                "ramMB": 200
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Resposta de atualização de RAM",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "ram": {
-                      "type": "object",
-                      "properties": {
-                        "totalRamOwner": {
-                          "type": "integer"
-                        },
-                        "totalUsedRamOwner": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": "ok",
-                      "statusCode": 200,
-                      "message": "A memória do seu aplicativo foi alterada com sucesso.",
-                      "ram": {
-                        "totalRamOwner": 16384,
-                        "totalUsedRamOwner": 3386
-                      }
-                    },
-                    "summary": "RAM atualizada com sucesso"
-                  },
-                  "insufficientRam": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pode colocar 14000 mb de RAM na sua aplicação, você só tem 13098 mb de memória RAM.",
-                      "ram": {
-                        "totalRamOwner": 16384,
-                        "totalUsedRamOwner": 3386
-                      }
-                    },
-                    "summary": "RAM disponível insuficiente"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Erro de autenticação",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "examples": {
-                  "noToken": {
-                    "value": {
-                      "message": "Bloqueado"
-                    },
-                    "summary": "Nenhum token fornecido"
-                  },
-                  "invalidToken": {
-                    "value": {
-                      "message": "Por favor, forneça um token válido"
-                    },
-                    "summary": "Token inválido fornecido"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Erro de autorização",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "notTeamMember": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
-                    },
-                    "summary": "Não é membro da equipe"
-                  },
-                  "noPermission": {
-                    "value": {
-                      "status": "error",
-                      "message": "Você não está em nenhuma equipe de aplicativo"
-                    },
-                    "summary": "Sem permissão para editar RAM"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/team/{appID}/status": {
       "get": {
-        "tags": [
-          "Membro da Equipe"
-        ],
+        "tags": ["Membro da Equipe"],
         "summary": "Obter status da aplicação como membro da equipe",
         "description": "Recupera informações de status para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
         "operationId": "getTeamAppStatus",
@@ -3972,6 +3258,627 @@
                       "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
                     },
                     "summary": "Sem permissão para status"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/start": {
+      "put": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Iniciar aplicação como membro da equipe",
+        "description": "Inicia uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "startTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para iniciar",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resposta de início da aplicação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "message": "Sua aplicação foi conectada."
+                    },
+                    "summary": "Aplicação iniciada com sucesso"
+                  },
+                  "alreadyRunning": {
+                    "value": {
+                      "status": "error",
+                      "message": "Sua aplicação já está ligada."
+                    },
+                    "summary": "Aplicação já está em execução"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
+                    },
+                    "summary": "Sem permissão para iniciar"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/restart": {
+      "put": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Reiniciar aplicação como membro da equipe",
+        "description": "Reinicia uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "restartTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para reiniciar",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resposta de reinício da aplicação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "message": "Sua aplicação foi reiniciada."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
+                    },
+                    "summary": "Sem permissão para reiniciar"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/stop": {
+      "put": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Parar aplicação como membro da equipe",
+        "description": "Para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "stopTeamApp",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para parar",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resposta de parada da aplicação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "message": "Sua aplicação foi desligada."
+                    },
+                    "summary": "Aplicação parada com sucesso"
+                  },
+                  "alreadyStopped": {
+                    "value": {
+                      "status": "error",
+                      "message": "Sua aplicação já está desligada."
+                    },
+                    "summary": "Aplicação já parada"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 1745287471226"
+                    },
+                    "summary": "Sem permissão para parar"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/commit": {
+      "put": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Atualizar código da aplicação como membro da equipe",
+        "description": "Atualiza uma aplicação existente fazendo upload de uma nova versão do código como membro da equipe",
+        "operationId": "commitTeamAppChanges",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para atualizar",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Arquivo da aplicação para fazer upload (formato .ZIP)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta de commit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "statusCode": 200,
+                  "message": "Os arquivos da sua aplicação foram atualizados com sucesso."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não está em nenhuma equipe de aplicativo"
+                    },
+                    "summary": "Sem permissão para commit"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Arquivo obrigatório ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Arquivo obrigatório"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{appID}/ram": {
+      "put": {
+        "tags": ["Membro da Equipe"],
+        "summary": "Atualizar RAM da aplicação como membro da equipe",
+        "description": "Atualiza a alocação de RAM para uma aplicação que o usuário autenticado tem acesso como membro da equipe",
+        "operationId": "updateTeamAppRam",
+        "parameters": [
+          {
+            "name": "appID",
+            "in": "path",
+            "required": true,
+            "description": "ID da aplicação para atualizar RAM",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppRamUpdateRequest"
+              },
+              "example": {
+                "ramMB": 200
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta de atualização de RAM",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "ram": {
+                      "type": "object",
+                      "properties": {
+                        "totalRamOwner": {
+                          "type": "integer"
+                        },
+                        "totalUsedRamOwner": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "ok",
+                      "statusCode": 200,
+                      "message": "A memória do seu aplicativo foi alterada com sucesso.",
+                      "ram": {
+                        "totalRamOwner": 16384,
+                        "totalUsedRamOwner": 3386
+                      }
+                    },
+                    "summary": "RAM atualizada com sucesso"
+                  },
+                  "insufficientRam": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pode colocar 14000 mb de RAM na sua aplicação, você só tem 13098 mb de memória RAM.",
+                      "ram": {
+                        "totalRamOwner": 16384,
+                        "totalUsedRamOwner": 3386
+                      }
+                    },
+                    "summary": "RAM disponível insuficiente"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Bloqueado"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Por favor, forneça um token válido"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Erro de autorização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notTeamMember": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não pertence a nenhuma equipe do aplicativo 17452874712261"
+                    },
+                    "summary": "Não é membro da equipe"
+                  },
+                  "noPermission": {
+                    "value": {
+                      "status": "error",
+                      "message": "Você não está em nenhuma equipe de aplicativo"
+                    },
+                    "summary": "Sem permissão para editar RAM"
                   }
                 }
               }
