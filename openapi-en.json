@@ -143,7 +143,10 @@
           },
           "locale": {
             "type": "string",
-            "enum": ["pt-BR", "en-US"]
+            "enum": [
+              "pt-BR",
+              "en-US"
+            ]
           }
         }
       },
@@ -184,7 +187,7 @@
           },
           "avatarURL": {
             "type": "string",
-            "description": "URL to the application\u0027s avatar image"
+            "description": "URL to the application's avatar image"
           },
           "name": {
             "type": "string",
@@ -472,7 +475,9 @@
       },
       "AppRamUpdateRequest": {
         "type": "object",
-        "required": ["ramMB"],
+        "required": [
+          "ramMB"
+        ],
         "properties": {
           "ramMB": {
             "type": "integer",
@@ -542,7 +547,10 @@
       },
       "TeamMemberAddRequest": {
         "type": "object",
-        "required": ["modID", "perms"],
+        "required": [
+          "modID",
+          "perms"
+        ],
         "properties": {
           "modID": {
             "type": "string",
@@ -670,11 +678,14 @@
       },
       "AppProfileUpdateRequest": {
         "type": "object",
-        "required": ["avatarURL", "name"],
+        "required": [
+          "avatarURL",
+          "name"
+        ],
         "properties": {
           "avatarURL": {
             "type": "string",
-            "description": "URL to the application\u0027s avatar image",
+            "description": "URL to the application's avatar image",
             "example": "https://i.ibb.co/0yJhZw92/Uma01.png"
           },
           "name": {
@@ -709,7 +720,10 @@
             "description": "File or directory name"
           },
           "type": {
-            "enum": ["file", "directory"],
+            "enum": [
+              "file",
+              "directory"
+            ],
             "description": "Type of item",
             "type": "string"
           }
@@ -771,12 +785,18 @@
           }
         },
         "type": "object",
-        "required": ["cPath", "fileContent"]
+        "required": [
+          "cPath",
+          "fileContent"
+        ]
       },
       "ExplorerCreateRequest": {
         "properties": {
           "typeFile": {
-            "enum": ["file", "directory"],
+            "enum": [
+              "file",
+              "directory"
+            ],
             "description": "Type to create",
             "type": "string"
           },
@@ -786,7 +806,10 @@
           }
         },
         "type": "object",
-        "required": ["cPath", "typeFile"]
+        "required": [
+          "cPath",
+          "typeFile"
+        ]
       },
       "ExplorerOperationResponse": {
         "properties": {
@@ -809,7 +832,9 @@
           }
         },
         "type": "object",
-        "required": ["cmd"]
+        "required": [
+          "cmd"
+        ]
       },
       "ExecOutput": {
         "properties": {
@@ -882,16 +907,14 @@
     {
       "name": "Team Member",
       "description": "Operations about team members"
-    },
-    {
-      "name": "Explorer",
-      "description": "Operations for file and directory management"
     }
   ],
   "paths": {
     "/user": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get current user information",
         "description": "Returns information about the authenticated user",
         "operationId": "getCurrentUser",
@@ -910,9 +933,15 @@
                     "userID": "803658045736878080",
                     "totalRamMb": 16384,
                     "ramUsedMb": 3386,
-                    "subdomains": ["exemplo"],
-                    "customdomains": ["example.discloud.com"],
-                    "apps": ["1719010867306"],
+                    "subdomains": [
+                      "exemplo"
+                    ],
+                    "customdomains": [
+                      "example.discloud.com"
+                    ],
+                    "apps": [
+                      "1719010867306"
+                    ],
                     "plan": "Safira",
                     "locale": "pt-BR",
                     "lastDataLeft": {
@@ -956,9 +985,11 @@
     },
     "/locale/{locale}": {
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update user locale",
-        "description": "Updates the user\u0027s preferred language/locale",
+        "description": "Updates the user's preferred language/locale",
         "operationId": "updateUserLocale",
         "parameters": [
           {
@@ -968,7 +999,10 @@
             "description": "The locale to set for the user",
             "schema": {
               "type": "string",
-              "enum": ["pt-BR", "en-US"]
+              "enum": [
+                "pt-BR",
+                "en-US"
+              ]
             }
           }
         ],
@@ -1015,7 +1049,10 @@
                 "example": {
                   "status": "error",
                   "message": "The translation into language fr-FR does not yet exist.",
-                  "localeList": ["pt-BR", "en-US"]
+                  "localeList": [
+                    "pt-BR",
+                    "en-US"
+                  ]
                 }
               }
             }
@@ -1025,7 +1062,9 @@
     },
     "/upload": {
       "post": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Upload application",
         "description": "Upload a new application to Discloud",
         "operationId": "uploadApplication",
@@ -1035,7 +1074,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1137,7 +1178,9 @@
     },
     "/app/{appID}": {
       "get": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Get application information",
         "description": "Retrieves information about a specific application or all applications",
         "operationId": "getAppInfo",
@@ -1225,7 +1268,9 @@
     },
     "/app/{appID}/status": {
       "get": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Get application status",
         "description": "Retrieves status information about a specific application or all applications",
         "operationId": "getAppStatus",
@@ -1311,7 +1356,9 @@
     },
     "/app/{appID}/logs": {
       "get": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Get application logs",
         "description": "Retrieves logs for a specific application or all applications",
         "operationId": "getAppLogs",
@@ -1392,7 +1439,9 @@
     },
     "/app/{appID}/backup": {
       "get": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Get application backup",
         "description": "Generates and retrieves backup for a specific application or all applications",
         "operationId": "getAppBackup",
@@ -1469,7 +1518,9 @@
     },
     "/app/{appID}/start": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Start application",
         "description": "Starts a specific application or all applications",
         "operationId": "startApp",
@@ -1563,7 +1614,9 @@
     },
     "/app/{appID}/restart": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Restart application",
         "description": "Restarts a specific application or all applications",
         "operationId": "restartApp",
@@ -1636,7 +1689,9 @@
     },
     "/app/{appID}/stop": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Stop application",
         "description": "Stops a specific application or all applications",
         "operationId": "stopApp",
@@ -1721,7 +1776,9 @@
     },
     "/app/{appID}/ram": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Update application RAM",
         "description": "Updates the RAM allocation for a specific application",
         "operationId": "updateAppRam",
@@ -1832,7 +1889,9 @@
     },
     "/app/{appID}/commit": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Update application code",
         "description": "Updates an existing application by uploading a new version of the code",
         "operationId": "commitAppChanges",
@@ -1853,7 +1912,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1931,7 +1992,9 @@
     },
     "/app/{appID}/profile": {
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Update application profile",
         "description": "Updates the profile information (avatar and name) for a specific application",
         "operationId": "updateAppProfile",
@@ -2027,7 +2090,9 @@
     },
     "/app/{appID}/explorer": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "List files and directories",
         "description": "List files and directories in the application's directory",
         "operationId": "listExplorer",
@@ -2095,7 +2160,9 @@
         }
       },
       "post": {
-        "tags": ["Explorer"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Create file or directory",
         "description": "Create a new file or directory in the application",
         "operationId": "createExplorer",
@@ -2176,7 +2243,9 @@
     },
     "/app/{appID}/explorer/open": {
       "get": {
-        "tags": ["Explorer"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Open/read file",
         "description": "Read the contents of a file in the application",
         "operationId": "openExplorer",
@@ -2246,7 +2315,9 @@
     },
     "/app/{appID}/explorer/edit": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Edit file",
         "description": "Edit the contents of a file in the application",
         "operationId": "editExplorer",
@@ -2327,7 +2398,9 @@
     },
     "/app/{appID}/exec": {
       "put": {
-        "tags": ["Explorer"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Execute command in container",
         "description": "Execute a command inside the application container",
         "operationId": "execCommand",
@@ -2421,7 +2494,9 @@
     },
     "/app/{appID}/delete": {
       "delete": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Delete application",
         "description": "Permanently deletes an application",
         "operationId": "deleteApp",
@@ -2494,7 +2569,9 @@
     },
     "/app/{appID}/team": {
       "get": {
-        "tags": ["Team Management"],
+        "tags": [
+          "Team Management"
+        ],
         "summary": "Get application team members",
         "description": "Retrieves the list of team members for a specific application",
         "operationId": "getAppTeam",
@@ -2611,7 +2688,9 @@
         }
       },
       "post": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Add team member",
         "description": "Adds a new team member to an application with specified permissions",
         "operationId": "addAppTeamMember",
@@ -2767,7 +2846,9 @@
         }
       },
       "put": {
-        "tags": ["Applications"],
+        "tags": [
+          "Applications"
+        ],
         "summary": "Update team member permissions",
         "description": "Updates permissions for an existing team member of an application",
         "operationId": "updateAppTeamMember",
@@ -2903,7 +2984,9 @@
     },
     "/app/{appID}/team/{modID}": {
       "delete": {
-        "tags": ["Team Management"],
+        "tags": [
+          "Team Management"
+        ],
         "summary": "Remove team member",
         "description": "Removes a team member from an application",
         "operationId": "removeAppTeamMember",
@@ -3012,7 +3095,9 @@
     },
     "/team": {
       "get": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Get team member applications",
         "description": "Retrieves the list of applications that the authenticated user has team member access to",
         "operationId": "getTeamMemberApps",
@@ -3108,7 +3193,9 @@
     },
     "/team/{appID}/start": {
       "put": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Start application as team member",
         "description": "Starts an application that the authenticated user has team member access to",
         "operationId": "startTeamApp",
@@ -3201,14 +3288,14 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No start permission"
                   }
@@ -3221,7 +3308,9 @@
     },
     "/team/{appID}/restart": {
       "put": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Restart application as team member",
         "description": "Restarts an application that the authenticated user has team member access to",
         "operationId": "restartTeamApp",
@@ -3302,14 +3391,14 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No restart permission"
                   }
@@ -3322,7 +3411,9 @@
     },
     "/team/{appID}/stop": {
       "put": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Stop application as team member",
         "description": "Stops an application that the authenticated user has team member access to",
         "operationId": "stopTeamApp",
@@ -3415,14 +3506,14 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No stop permission"
                   }
@@ -3435,7 +3526,9 @@
     },
     "/team/{appID}/commit": {
       "put": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Update application code as team member",
         "description": "Updates an existing application by uploading a new version of the code as a team member",
         "operationId": "commitTeamAppChanges",
@@ -3456,7 +3549,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -3538,7 +3633,7 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
@@ -3580,7 +3675,9 @@
     },
     "/team/{appID}/backup": {
       "get": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Get application backup as team member",
         "description": "Generates and retrieves backup for an application that the authenticated user has team member access to",
         "operationId": "getTeamAppBackup",
@@ -3676,14 +3773,14 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No backup permission"
                   }
@@ -3696,7 +3793,9 @@
     },
     "/team/{appID}/ram": {
       "put": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Update application RAM as team member",
         "description": "Updates the RAM allocation for an application that the authenticated user has team member access to",
         "operationId": "updateTeamAppRam",
@@ -3825,7 +3924,7 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
@@ -3845,7 +3944,9 @@
     },
     "/team/{appID}/status": {
       "get": {
-        "tags": ["Team Member"],
+        "tags": [
+          "Team Member"
+        ],
         "summary": "Get application status as team member",
         "description": "Retrieves status information for an application that the authenticated user has team member access to",
         "operationId": "getTeamAppStatus",
@@ -3976,14 +4077,14 @@
                   "notTeamMember": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 17452874712261"
+                      "message": "You don't belong to any team of the app 17452874712261"
                     },
                     "summary": "Not a team member"
                   },
                   "noPermission": {
                     "value": {
                       "status": "error",
-                      "message": "You don\u0027t belong to any team of the app 1745287471226"
+                      "message": "You don't belong to any team of the app 1745287471226"
                     },
                     "summary": "No status permission"
                   }
