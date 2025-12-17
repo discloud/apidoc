@@ -779,12 +779,16 @@
     {
       "name": "Membro da Equipe",
       "description": "Operações sobre membros da equipe"
+    },
+    {
+      "name": "Explorer",
+      "description": "Operações de exploração de arquivos do contêiner"
     }
   ],
   "paths": {
     "/user": {
       "get": {
-        "tags": ["usuário"],
+        "tags": ["Usuário"],
         "summary": "Obter informações do usuário atual",
         "description": "Retorna informações sobre o usuário autenticado",
         "operationId": "getCurrentUser",
@@ -849,7 +853,7 @@
     },
     "/locale/{locale}": {
       "put": {
-        "tags": ["usuário"],
+        "tags": ["Usuário"],
         "summary": "Atualizar local do usuário",
         "description": "Atualiza o idioma preferido do usuário",
         "operationId": "updateUserLocale",
@@ -918,7 +922,7 @@
     },
     "/upload": {
       "post": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Fazer upload da aplicação",
         "description": "Faz upload de uma nova aplicação para a Discloud",
         "operationId": "uploadApplication",
@@ -1030,7 +1034,7 @@
     },
     "/app/{appID}": {
       "get": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Obter informações da aplicação",
         "description": "Recupera informações sobre uma aplicação específica ou todas as aplicações",
         "operationId": "getAppInfo",
@@ -1118,7 +1122,7 @@
     },
     "/app/{appID}/status": {
       "get": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Obter status da aplicação",
         "description": "Recupera informações de status sobre uma aplicação específica ou todas as aplicações",
         "operationId": "getAppStatus",
@@ -1204,7 +1208,7 @@
     },
     "/app/{appID}/logs": {
       "get": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Obter logs da aplicação",
         "description": "Recupera os logs de uma aplicação específica ou de todas as aplicações",
         "operationId": "getAppLogs",
@@ -1285,7 +1289,7 @@
     },
     "/app/{appID}/backup": {
       "get": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Obter backup da aplicação",
         "description": "Gera e recupera o backup de uma aplicação específica ou de todas as aplicações",
         "operationId": "getAppBackup",
@@ -1362,7 +1366,7 @@
     },
     "/app/{appID}/start": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Iniciar aplicação",
         "description": "Inicia uma aplicação específica ou todas as aplicações",
         "operationId": "startApp",
@@ -1456,7 +1460,7 @@
     },
     "/app/{appID}/restart": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Reiniciar aplicação",
         "description": "Reinicia uma aplicação específica ou todas as aplicações",
         "operationId": "restartApp",
@@ -1529,7 +1533,7 @@
     },
     "/app/{appID}/stop": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Parar aplicação",
         "description": "Para uma aplicação específica ou todas as aplicações",
         "operationId": "stopApp",
@@ -1614,7 +1618,7 @@
     },
     "/app/{appID}/ram": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Atualizar RAM da aplicação",
         "description": "Atualiza a alocação de RAM para uma aplicação específica",
         "operationId": "updateAppRam",
@@ -1725,7 +1729,7 @@
     },
     "/app/{appID}/commit": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Atualizar código da aplicação",
         "description": "Atualiza uma aplicação existente fazendo upload de uma nova versão do código",
         "operationId": "commitAppChanges",
@@ -1824,7 +1828,7 @@
     },
     "/app/{appID}/profile": {
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Atualizar perfil da aplicação",
         "description": "Atualiza as informações de perfil (avatar e nome) de uma aplicação específica",
         "operationId": "updateAppProfile",
@@ -2314,7 +2318,7 @@
     },
     "/app/{appID}/delete": {
       "delete": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Deletar aplicação",
         "description": "Deleta permanentemente uma aplicação",
         "operationId": "deleteApp",
@@ -2387,7 +2391,7 @@
     },
     "/app/{appID}/team": {
       "get": {
-        "tags": ["Team Management"],
+        "tags": ["Gerenciamento de Equipe"],
         "summary": "Obter membros da equipe da aplicação",
         "description": "Recupera a lista de membros da equipe para uma aplicação específica",
         "operationId": "getAppTeam",
@@ -2504,7 +2508,7 @@
         }
       },
       "post": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Adicionar membro à equipe",
         "description": "Adiciona um novo membro à equipe de uma aplicação com permissões especificadas",
         "operationId": "addAppTeamMember",
@@ -2660,7 +2664,7 @@
         }
       },
       "put": {
-        "tags": ["aplicações"],
+        "tags": ["Aplicações"],
         "summary": "Atualizar permissões do membro da equipe",
         "description": "Atualiza as permissões de um membro da equipe existente de uma aplicação",
         "operationId": "updateAppTeamMember",

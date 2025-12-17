@@ -891,7 +891,7 @@
   "paths": {
     "/user": {
       "get": {
-        "tags": ["user"],
+        "tags": ["User"],
         "summary": "Get current user information",
         "description": "Returns information about the authenticated user",
         "operationId": "getCurrentUser",
@@ -956,7 +956,7 @@
     },
     "/locale/{locale}": {
       "put": {
-        "tags": ["user"],
+        "tags": ["User"],
         "summary": "Update user locale",
         "description": "Updates the user\u0027s preferred language/locale",
         "operationId": "updateUserLocale",
@@ -1025,7 +1025,7 @@
     },
     "/upload": {
       "post": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Upload application",
         "description": "Upload a new application to Discloud",
         "operationId": "uploadApplication",
@@ -1137,7 +1137,7 @@
     },
     "/app/{appID}": {
       "get": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Get application information",
         "description": "Retrieves information about a specific application or all applications",
         "operationId": "getAppInfo",
@@ -1225,7 +1225,7 @@
     },
     "/app/{appID}/status": {
       "get": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Get application status",
         "description": "Retrieves status information about a specific application or all applications",
         "operationId": "getAppStatus",
@@ -1311,7 +1311,7 @@
     },
     "/app/{appID}/logs": {
       "get": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Get application logs",
         "description": "Retrieves logs for a specific application or all applications",
         "operationId": "getAppLogs",
@@ -1392,7 +1392,7 @@
     },
     "/app/{appID}/backup": {
       "get": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Get application backup",
         "description": "Generates and retrieves backup for a specific application or all applications",
         "operationId": "getAppBackup",
@@ -1469,7 +1469,7 @@
     },
     "/app/{appID}/start": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Start application",
         "description": "Starts a specific application or all applications",
         "operationId": "startApp",
@@ -1563,7 +1563,7 @@
     },
     "/app/{appID}/restart": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Restart application",
         "description": "Restarts a specific application or all applications",
         "operationId": "restartApp",
@@ -1636,7 +1636,7 @@
     },
     "/app/{appID}/stop": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Stop application",
         "description": "Stops a specific application or all applications",
         "operationId": "stopApp",
@@ -1721,7 +1721,7 @@
     },
     "/app/{appID}/ram": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Update application RAM",
         "description": "Updates the RAM allocation for a specific application",
         "operationId": "updateAppRam",
@@ -1832,7 +1832,7 @@
     },
     "/app/{appID}/commit": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Update application code",
         "description": "Updates an existing application by uploading a new version of the code",
         "operationId": "commitAppChanges",
@@ -1931,7 +1931,7 @@
     },
     "/app/{appID}/profile": {
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Update application profile",
         "description": "Updates the profile information (avatar and name) for a specific application",
         "operationId": "updateAppProfile",
@@ -2421,7 +2421,7 @@
     },
     "/app/{appID}/delete": {
       "delete": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Delete application",
         "description": "Permanently deletes an application",
         "operationId": "deleteApp",
@@ -2611,7 +2611,7 @@
         }
       },
       "post": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Add team member",
         "description": "Adds a new team member to an application with specified permissions",
         "operationId": "addAppTeamMember",
@@ -2767,7 +2767,7 @@
         }
       },
       "put": {
-        "tags": ["apps"],
+        "tags": ["Applications"],
         "summary": "Update team member permissions",
         "description": "Updates permissions for an existing team member of an application",
         "operationId": "updateAppTeamMember",
