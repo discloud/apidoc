@@ -30,24 +30,7 @@
           }
         }
       },
-      "Resource": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
+
       "User": {
         "type": "object",
         "properties": {
@@ -742,12 +725,116 @@
                 "$ref": "#/components/schemas/ExecOutput"
               },
               {
-                "type": "null"
+                "type": "object",
+                "nullable": true
               }
             ]
           }
         },
         "type": "object"
+      },
+      "FileItem": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "description": "Tamanho do arquivo em bytes (apenas para arquivos)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do arquivo ou diretório"
+          },
+          "type": {
+            "enum": ["file", "directory"],
+            "description": "Tipo de item",
+            "type": "string"
+          }
+        }
+      },
+      "ExplorerListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho do diretório atual"
+          },
+          "dir": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileItem"
+            }
+          }
+        }
+      },
+      "ExplorerOpenResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho completo do arquivo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do arquivo"
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do arquivo"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ExplorerEditRequest": {
+        "type": "object",
+        "required": ["cPath", "fileContent"],
+        "properties": {
+          "fileContent": {
+            "type": "string",
+            "description": "Novo conteúdo do arquivo"
+          },
+          "cPath": {
+            "type": "string",
+            "description": "Caminho completo do arquivo"
+          }
+        }
+      },
+      "ExplorerCreateRequest": {
+        "type": "object",
+        "required": ["cPath", "typeFile"],
+        "properties": {
+          "typeFile": {
+            "enum": ["file", "directory"],
+            "description": "Tipo a criar",
+            "type": "string"
+          },
+          "cPath": {
+            "type": "string",
+            "description": "Caminho completo para o novo arquivo ou diretório"
+          }
+        }
+      },
+      "ExplorerOperationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho do alvo da operação"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -1951,6 +2038,21 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerListResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app",
+                  "dir": [
+                    {
+                      "name": "index.js",
+                      "type": "file",
+                      "size": 1024
+                    },
+                    {
+                      "name": "src",
+                      "type": "directory"
+                    }
+                  ]
                 }
               }
             }
@@ -2020,6 +2122,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/newfile.js"
                 }
               }
             }
@@ -2100,6 +2206,13 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOpenResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js",
+                  "name": "index.js",
+                  "content": "console.log('Hello World');",
+                  "message": ""
                 }
               }
             }
@@ -2110,6 +2223,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
                 }
               }
             }
@@ -2120,6 +2247,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Você não tem permissão ou tem um plano insuficiente para usar o explorador"
                 }
               }
             }
@@ -2130,6 +2260,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "fileNotFound": {
+                    "value": {
+                      "message": "File not found"
+                    },
+                    "summary": "Arquivo não encontrado"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Caminho inválido"
+                  }
                 }
               }
             }
@@ -2171,6 +2315,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js"
                 }
               }
             }
@@ -2275,6 +2423,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
                 }
               }
             }
@@ -2470,6 +2632,9 @@
                     },
                     "team": {
                       "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
                       "description": "Presente apenas na resposta de nenhum membro da equipe"
                     }
                   }
