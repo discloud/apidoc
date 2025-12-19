@@ -30,6 +30,7 @@
           }
         }
       },
+
       "User": {
         "type": "object",
         "properties": {
@@ -737,13 +738,14 @@
         "properties": {
           "size": {
             "type": "integer",
-            "description": "Tamanho do arquivo em bytes"
+            "description": "Tamanho do arquivo em bytes (apenas para arquivos)"
           },
           "name": {
             "type": "string",
             "description": "Nome do arquivo ou diretório"
           },
           "type": {
+            "enum": ["file", "directory"],
             "description": "Tipo de item",
             "type": "string"
           }
@@ -796,13 +798,13 @@
         "type": "object",
         "required": ["cPath", "fileContent"],
         "properties": {
-          "cPath": {
-            "type": "string",
-            "description": "Caminho completo do arquivo a editar"
-          },
           "fileContent": {
             "type": "string",
             "description": "Novo conteúdo do arquivo"
+          },
+          "cPath": {
+            "type": "string",
+            "description": "Caminho completo do arquivo"
           }
         }
       },
@@ -810,14 +812,14 @@
         "type": "object",
         "required": ["cPath", "typeFile"],
         "properties": {
+          "typeFile": {
+            "enum": ["file", "directory"],
+            "description": "Tipo a criar",
+            "type": "string"
+          },
           "cPath": {
             "type": "string",
-            "description": "Caminho completo do arquivo ou diretório a criar"
-          },
-          "typeFile": {
-            "type": "string",
-            "enum": ["file", "directory"],
-            "description": "Tipo de item a criar"
+            "description": "Caminho completo para o novo arquivo ou diretório"
           }
         }
       },
@@ -830,7 +832,7 @@
           },
           "path": {
             "type": "string",
-            "description": "Caminho do arquivo ou diretório criado/editado"
+            "description": "Caminho do alvo da operação"
           }
         }
       }
@@ -2036,6 +2038,21 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerListResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app",
+                  "dir": [
+                    {
+                      "name": "index.js",
+                      "type": "file",
+                      "size": 1024
+                    },
+                    {
+                      "name": "src",
+                      "type": "directory"
+                    }
+                  ]
                 }
               }
             }
@@ -2105,6 +2122,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/newfile.js"
                 }
               }
             }
@@ -2185,6 +2206,13 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOpenResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js",
+                  "name": "index.js",
+                  "content": "console.log('Hello World');",
+                  "message": ""
                 }
               }
             }
@@ -2195,6 +2223,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
                 }
               }
             }
@@ -2205,6 +2247,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Você não tem permissão ou tem um plano insuficiente para usar o explorador"
                 }
               }
             }
@@ -2215,6 +2260,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "fileNotFound": {
+                    "value": {
+                      "message": "File not found"
+                    },
+                    "summary": "Arquivo não encontrado"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Caminho inválido"
+                  }
                 }
               }
             }
@@ -2256,6 +2315,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js"
                 }
               }
             }
@@ -2360,6 +2423,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "Nenhum token fornecido"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Token inválido fornecido"
+                  }
                 }
               }
             }
@@ -2555,6 +2632,9 @@
                     },
                     "team": {
                       "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
                       "description": "Presente apenas na resposta de nenhum membro da equipe"
                     }
                   }

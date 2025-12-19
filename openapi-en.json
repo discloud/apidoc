@@ -30,6 +30,7 @@
           }
         }
       },
+
       "User": {
         "type": "object",
         "properties": {
@@ -2037,6 +2038,21 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerListResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app",
+                  "dir": [
+                    {
+                      "name": "index.js",
+                      "type": "file",
+                      "size": 1024
+                    },
+                    {
+                      "name": "src",
+                      "type": "directory"
+                    }
+                  ]
                 }
               }
             }
@@ -2047,6 +2063,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
                 }
               }
             }
@@ -2057,6 +2087,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "You don't have permission or have an insufficient plan to use explorer"
                 }
               }
             }
@@ -2067,6 +2100,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "appNotFound": {
+                    "value": {
+                      "message": "Application not found"
+                    },
+                    "summary": "Application not found"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Invalid path"
+                  }
                 }
               }
             }
@@ -2106,6 +2153,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/newfile.js"
                 }
               }
             }
@@ -2116,6 +2167,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Missing required fields: cPath, typeFile"
                 }
               }
             }
@@ -2126,6 +2180,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
                 }
               }
             }
@@ -2136,6 +2204,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "You don't have permission or have an insufficient plan to use explorer"
                 }
               }
             }
@@ -2146,6 +2217,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "appNotFound": {
+                    "value": {
+                      "message": "Application not found"
+                    },
+                    "summary": "Application not found"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Invalid path"
+                  }
                 }
               }
             }
@@ -2186,6 +2271,13 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOpenResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js",
+                  "name": "index.js",
+                  "content": "console.log('Hello World');",
+                  "message": ""
                 }
               }
             }
@@ -2196,6 +2288,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
                 }
               }
             }
@@ -2206,6 +2312,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "You don't have permission or have an insufficient plan to use explorer"
                 }
               }
             }
@@ -2216,6 +2325,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "fileNotFound": {
+                    "value": {
+                      "message": "File not found"
+                    },
+                    "summary": "File not found"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Invalid path"
+                  }
                 }
               }
             }
@@ -2257,6 +2380,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExplorerOperationResponse"
+                },
+                "example": {
+                  "status": "ok",
+                  "path": "/root/app/index.js"
                 }
               }
             }
@@ -2267,6 +2394,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Missing required fields: cPath, fileContent"
                 }
               }
             }
@@ -2277,6 +2407,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
                 }
               }
             }
@@ -2287,6 +2431,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "You don't have permission or have an insufficient plan to use explorer"
                 }
               }
             }
@@ -2297,6 +2444,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "fileNotFound": {
+                    "value": {
+                      "message": "File not found"
+                    },
+                    "summary": "File not found"
+                  },
+                  "invalidPath": {
+                    "value": {
+                      "message": "Invalid path format"
+                    },
+                    "summary": "Invalid path"
+                  }
                 }
               }
             }
@@ -2361,6 +2522,20 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "noToken": {
+                    "value": {
+                      "message": "Block"
+                    },
+                    "summary": "No token provided"
+                  },
+                  "invalidToken": {
+                    "value": {
+                      "message": "Please provide a valid token"
+                    },
+                    "summary": "Invalid token provided"
+                  }
                 }
               }
             }
@@ -2556,6 +2731,9 @@
                     },
                     "team": {
                       "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
                       "description": "Present only in no team members response"
                     }
                   }
