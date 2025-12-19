@@ -30,24 +30,6 @@
           }
         }
       },
-      "Resource": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
       "User": {
         "type": "object",
         "properties": {
@@ -742,12 +724,115 @@
                 "$ref": "#/components/schemas/ExecOutput"
               },
               {
-                "type": "null"
+                "type": "object",
+                "nullable": true
               }
             ]
           }
         },
         "type": "object"
+      },
+      "FileItem": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "description": "Tamanho do arquivo em bytes"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do arquivo ou diretório"
+          },
+          "type": {
+            "description": "Tipo de item",
+            "type": "string"
+          }
+        }
+      },
+      "ExplorerListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho do diretório atual"
+          },
+          "dir": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileItem"
+            }
+          }
+        }
+      },
+      "ExplorerOpenResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho completo do arquivo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do arquivo"
+          },
+          "content": {
+            "type": "string",
+            "description": "Conteúdo do arquivo"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ExplorerEditRequest": {
+        "type": "object",
+        "required": ["cPath", "fileContent"],
+        "properties": {
+          "cPath": {
+            "type": "string",
+            "description": "Caminho completo do arquivo a editar"
+          },
+          "fileContent": {
+            "type": "string",
+            "description": "Novo conteúdo do arquivo"
+          }
+        }
+      },
+      "ExplorerCreateRequest": {
+        "type": "object",
+        "required": ["cPath", "typeFile"],
+        "properties": {
+          "cPath": {
+            "type": "string",
+            "description": "Caminho completo do arquivo ou diretório a criar"
+          },
+          "typeFile": {
+            "type": "string",
+            "enum": ["file", "directory"],
+            "description": "Tipo de item a criar"
+          }
+        }
+      },
+      "ExplorerOperationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "path": {
+            "type": "string",
+            "description": "Caminho do arquivo ou diretório criado/editado"
+          }
+        }
       }
     },
     "securitySchemes": {

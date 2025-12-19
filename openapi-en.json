@@ -30,24 +30,6 @@
           }
         }
       },
-      "Resource": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
       "User": {
         "type": "object",
         "properties": {
@@ -699,6 +681,7 @@
         }
       },
       "FileItem": {
+        "type": "object",
         "properties": {
           "size": {
             "type": "integer",
@@ -713,8 +696,7 @@
             "description": "Type of item",
             "type": "string"
           }
-        },
-        "type": "object"
+        }
       },
       "ExplorerListResponse": {
         "properties": {
@@ -727,10 +709,10 @@
             "description": "Current directory path"
           },
           "dir": {
+            "type": "array",
             "items": {
-              "": "#/components/schemas/FileItem"
-            },
-            "type": "array"
+              "$ref": "#/components/schemas/FileItem"
+            }
           }
         },
         "type": "object"
@@ -845,7 +827,8 @@
                 "$ref": "#/components/schemas/ExecOutput"
               },
               {
-                "type": "null"
+                "type": "object",
+                "nullable": true
               }
             ]
           }
