@@ -47,6 +47,16 @@ components:
           type: string
           description: O ID do usuário
           x-gitbook-description-html: <p>O ID do usuário</p>
+        username:
+          type: string
+          nullable: true
+          description: O nome de usuário
+          x-gitbook-description-html: <p>O nome de usuário</p>
+        avatar:
+          type: string
+          nullable: true
+          description: URL do avatar do usuário
+          x-gitbook-description-html: <p>URL do avatar do usuário</p>
         totalRamMb:
           type: integer
           description: RAM total alocada (em MB)
@@ -104,9 +114,10 @@ components:
           x-gitbook-description-html: <p>Tempo restante do plano atual</p>
         planDataEnd:
           type: string
-          format: date-time
-          description: Data de término do plano atual
-          x-gitbook-description-html: <p>Data de término do plano atual</p>
+          description: >-
+            Data de término do plano atual, ou "Subscription" para planos por assinatura
+          x-gitbook-description-html: >-
+            <p>Data de término do plano atual, ou "Subscription" para planos por assinatura</p>
     UserResponse:
       type: object
       properties:
@@ -120,6 +131,8 @@ components:
       type: object
       properties:
         status:
+          type: string
+        message:
           type: string
         locale:
           type: string
@@ -144,6 +157,56 @@ components:
           type: string
         message:
           type: string
+    UploadedApp:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID da aplicação
+        type:
+          type: integer
+          description: Tipo de aplicação (0 = bot, 1 = site)
+        name:
+          type: string
+          description: Nome da aplicação
+        avatarURL:
+          type: string
+          description: URL para a imagem do avatar da aplicação
+        ram:
+          type: integer
+          description: RAM alocada para a aplicação (em MB)
+        mainFile:
+          type: string
+          description: Caminho do arquivo principal da aplicação
+        lang:
+          type: string
+          description: Linguagem de programação da aplicação
+        version:
+          type: string
+          description: Versão definida em VERSION no discloud.config
+        addedAtTimestamp:
+          type: integer
+          description: Timestamp (em milissegundos) do upload da aplicação
+        autoRestart:
+          type: boolean
+          description: Se a aplicação reinicia automaticamente em caso de falha
+    UploadResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - error
+        statusCode:
+          type: integer
+        message:
+          type: string
+        app:
+          $ref: '#/components/schemas/UploadedApp'
+        logs:
+          type: string
+          description: Logs da aplicação, caso ela falhe ao iniciar
     App:
       type: object
       properties:
@@ -161,8 +224,8 @@ components:
           x-gitbook-description-html: <p>Nome da aplicação</p>
         type:
           type: integer
-          description: Tipo de aplicação
-          x-gitbook-description-html: <p>Tipo de aplicação</p>
+          description: Tipo de aplicação (0 = bot, 1 = site)
+          x-gitbook-description-html: <p>Tipo de aplicação (0 = bot, 1 = site)</p>
         online:
           type: boolean
           description: Se a aplicação está atualmente online
@@ -197,6 +260,22 @@ components:
           type: boolean
           description: Se a aplicação reinicia automaticamente em caso de falha
           x-gitbook-description-html: <p>Se a aplicação reinicia automaticamente em caso de falha</p>
+        mods:
+          type: array
+          items:
+            type: string
+          description: IDs dos moderadores da aplicação
+          x-gitbook-description-html: <p>IDs dos moderadores da aplicação</p>
+        apts:
+          type: array
+          items:
+            type: string
+          description: Pacotes APT instalados na aplicação
+          x-gitbook-description-html: <p>Pacotes APT instalados na aplicação</p>
+        addedTimestamp:
+          type: integer
+          description: Timestamp (em milissegundos) de quando a aplicação foi enviada
+          x-gitbook-description-html: <p>Timestamp (em milissegundos) de quando a aplicação foi enviada</p>
     AppResponse:
       type: object
       properties:
@@ -312,6 +391,10 @@ components:
           type: string
           description: URL para baixar o backup da aplicação
           x-gitbook-description-html: <p>URL para baixar o backup da aplicação</p>
+        status:
+          type: string
+          description: Estado do backup (presente apenas quando appID é "all")
+          x-gitbook-description-html: <p>Estado do backup (presente apenas quando appID é "all")</p>
     AppBackupResponse:
       type: object
       properties:
@@ -351,6 +434,25 @@ components:
           type: string
         appStatus:
           $ref: '#/components/schemas/AppStartStatus'
+        apps:
+          type: object
+          description: Resultado por aplicação (presente apenas quando appID é "all")
+          properties:
+            started:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que foram iniciadas
+            alreadyOnline:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam online
+            alreadyInProcess:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam em processamento
     AppRestartResponse:
       type: object
       properties:
@@ -358,6 +460,25 @@ components:
           type: string
         message:
           type: string
+        apps:
+          type: object
+          description: Resultado por aplicação (presente apenas quando appID é "all")
+          properties:
+            restarted:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que foram reiniciadas
+            alreadyOffline:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que estavam offline
+            alreadyInProcess:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam em processamento
     AppStopResponse:
       type: object
       properties:
@@ -365,6 +486,25 @@ components:
           type: string
         message:
           type: string
+        apps:
+          type: object
+          description: Resultado por aplicação (presente apenas quando appID é "all")
+          properties:
+            stoped:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que foram paradas
+            alreadyOffline:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam offline
+            alreadyInProcess:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam em processamento
     AppRamUpdateRequest:
       type: object
       required:
@@ -372,9 +512,11 @@ components:
       properties:
         ramMB:
           type: integer
-          description: A quantidade de RAM em MB para alocar a aplicação
+          description: >-
+            A quantidade de RAM em MB para alocar a aplicação. Mínimo de 100 MB para bots e 512 MB para sites.
           example: 200
-          x-gitbook-description-html: <p>A quantidade de RAM em MB para alocar a aplicação</p>
+          x-gitbook-description-html: >-
+            <p>A quantidade de RAM em MB para alocar a aplicação. Mínimo de 100 MB para bots e 512 MB para sites.</p>
     AppRamUpdateResponse:
       type: object
       properties:
@@ -391,11 +533,40 @@ components:
           type: string
         message:
           type: string
+        apps:
+          type: object
+          description: Resultado por aplicação (presente apenas quando appID é "all")
+          properties:
+            removealled:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que foram removidas
+            alreadyOffline:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que estavam offline
+            alreadyInProcess:
+              type: array
+              items:
+                type: string
+              description: IDs das aplicações que já estavam em processamento
+    AppCommitResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        statusCode:
+          type: integer
+        message:
+          type: string
+        logs:
+          type: string
+          description: Logs da aplicação, caso ela falhe ao iniciar
     AppProfileUpdateRequest:
       type: object
-      required:
-      - avatarURL
-      - name
+      description: Ambos os campos são opcionais; envie apenas os que deseja alterar.
       properties:
         avatarURL:
           type: string
@@ -404,9 +575,10 @@ components:
           x-gitbook-description-html: <p>URL para a imagem do avatar da aplicação</p>
         name:
           type: string
-          description: Nome da aplicação
+          maxLength: 30
+          description: Nome da aplicação (máximo de 30 caracteres)
           example: Discloud App
-          x-gitbook-description-html: <p>Nome da aplicação</p>
+          x-gitbook-description-html: <p>Nome da aplicação (máximo de 30 caracteres)</p>
     AppProfileUpdateResponse:
       type: object
       properties:
@@ -416,6 +588,274 @@ components:
           type: integer
         message:
           type: string
+    AppAptRequest:
+      type: object
+      required:
+      - apt
+      properties:
+        apt:
+          type: string
+          description: >-
+            Um ou mais pacotes APT separados por vírgula. Valores aceitos: canvas,
+            ffmpeg, java, libgl, openssl, puppeteer, tools.
+          example: ffmpeg,java
+    AppAptResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        statusCode:
+          type: integer
+        message:
+          type: string
+    AppConsoleRequest:
+      type: object
+      required:
+      - command
+      properties:
+        command:
+          type: string
+          description: Comando a ser enviado ao terminal da aplicação
+          example: ls
+    AppConsoleResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        apps:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID da aplicação
+            shell:
+              type: object
+              properties:
+                online:
+                  type: boolean
+                  description: Se a aplicação está online
+                stdout:
+                  type: string
+                  description: Saída padrão do comando
+                stderr:
+                  type: string
+                  description: Saída de erro do comando
+    AppModeratorPermission:
+      type: string
+      enum:
+      - backup_app
+      - commit_app
+      - edit_ram
+      - logs_app
+      - restart_app
+      - start_app
+      - status_app
+      - stop_app
+    AppModerator:
+      type: object
+      properties:
+        modID:
+          type: string
+          description: ID do usuário moderador
+        perms:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppModeratorPermission'
+          description: Permissões do moderador
+        avatar:
+          type: string
+          nullable: true
+          description: URL do avatar do moderador
+        username:
+          type: string
+          nullable: true
+          description: Nome de usuário do moderador
+    AppModeratorRequest:
+      type: object
+      required:
+      - modID
+      - perms
+      properties:
+        modID:
+          type: string
+          description: ID do usuário moderador
+        perms:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppModeratorPermission'
+          description: Permissões a conceder ao moderador
+    AppModeratorListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        team:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppModerator'
+    AppModeratorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        app:
+          allOf:
+          - $ref: '#/components/schemas/AppModerator'
+          - type: object
+            properties:
+              appID:
+                type: string
+                description: ID da aplicação
+    TeamApp:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID da aplicação
+        name:
+          type: string
+          description: Nome da aplicação
+        type:
+          type: integer
+          description: Tipo de aplicação (0 = bot, 1 = site)
+        online:
+          type: boolean
+          description: Se a aplicação está atualmente online
+        ram:
+          type: integer
+          description: RAM alocada para a aplicação (em MB)
+        ramKilled:
+          type: boolean
+          description: >-
+            Se a aplicação foi desligada devido a ultrapassagem da quantidade de RAM
+        exitCode:
+          type: integer
+          description: Código de saída da aplicação, se ela foi interrompida
+        lang:
+          type: string
+          description: Linguagem de programação da aplicação
+        owner:
+          type: object
+          description: Dono da aplicação
+          properties:
+            name:
+              type: string
+              description: Nome do dono
+            avatar:
+              type: string
+              description: URL do avatar do dono
+        perms:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppModeratorPermission'
+          description: As suas permissões nesta aplicação
+    TeamAppListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamApp'
+    VscodeUserResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        user:
+          type: object
+          properties:
+            userID:
+              type: string
+              description: O ID do usuário
+            username:
+              type: string
+              nullable: true
+              description: O nome de usuário
+            avatar:
+              type: string
+              nullable: true
+              description: URL do avatar do usuário
+            plan:
+              type: string
+              description: O plano de assinatura
+            locale:
+              type: string
+              description: O idioma/localização
+            totalRamMb:
+              type: integer
+              description: RAM total alocada (em MB)
+            ramUsedMb:
+              type: integer
+              description: RAM atualmente sendo usada (em MB)
+            apps:
+              type: array
+              items:
+                type: string
+              description: Lista de IDs das aplicações pertencentes
+            appsTeam:
+              type: array
+              items:
+                type: string
+              description: Lista de IDs das aplicações em que o usuário é moderador
+            subdomains:
+              type: array
+              items:
+                type: string
+              description: Lista de subdomínios pertencentes
+            customdomains:
+              type: array
+              items:
+                type: string
+              description: Lista de domínios personalizados pertencentes
+            appsStatus:
+              type: array
+              description: Dados de cada aplicação do usuário
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  type:
+                    type: integer
+                    description: Tipo de aplicação (0 = bot, 1 = site)
+                  online:
+                    type: boolean
+                  ram:
+                    type: integer
+                  ramKilled:
+                    type: boolean
+                  exitCode:
+                    type: integer
+                  lang:
+                    type: string
+                  mainFile:
+                    type: string
+                  avatarURL:
+                    type: string
+                  autoRestart:
+                    type: boolean
+                  apts:
+                    type: array
+                    items:
+                      type: string
+                  clusterName:
+                    type: string
+                  version:
+                    type: string
     ExecRequest:
       properties:
         cmd:
@@ -556,6 +996,7 @@ components:
           type: string
         status:
           type: integer
+          description: 1 = disponível, 2 = em uso
         date:
           type: integer
           description: Timestamp de criação em milissegundos
@@ -572,6 +1013,8 @@ components:
       type: object
       properties:
         status:
+          type: string
+        message:
           type: string
         subdomains:
           type: array
@@ -632,6 +1075,8 @@ components:
       properties:
         status:
           type: string
+        message:
+          type: string
         domains:
           type: array
           items:
@@ -680,6 +1125,42 @@ tags:
           text: Operações sobre Aplicações
           marks: []
   x-gitbook-description-html: <p>Operações sobre Aplicações</p>
+- name: Moderadores da Aplicação
+  description: Operações sobre os moderadores das suas aplicações
+  x-gitbook-description-document:
+    object: document
+    data:
+      schemaVersion: 9
+    nodes:
+    - object: block
+      type: paragraph
+      isVoid: false
+      data: {}
+      nodes:
+      - object: text
+        leaves:
+        - object: leaf
+          text: Operações sobre os moderadores das suas aplicações
+          marks: []
+  x-gitbook-description-html: <p>Operações sobre os moderadores das suas aplicações</p>
+- name: Aplicações da Equipe
+  description: Operações sobre aplicações de outros usuários em que você é moderador
+  x-gitbook-description-document:
+    object: document
+    data:
+      schemaVersion: 9
+    nodes:
+    - object: block
+      type: paragraph
+      isVoid: false
+      data: {}
+      nodes:
+      - object: text
+        leaves:
+        - object: leaf
+          text: Operações sobre aplicações de outros usuários em que você é moderador
+          marks: []
+  x-gitbook-description-html: <p>Operações sobre aplicações de outros usuários em que você é moderador</p>
 - name: Gerenciamento de Equipe
   description: Operações sobre gerenciamento de equipe
   x-gitbook-description-document:
@@ -858,6 +1339,8 @@ paths:
                   - example.discloud.com
                   apps:
                   - '1719010867306'
+                  username: exemplo
+                  avatar: https://cdn.discordapp.com/embed/avatars/0.png
                   plan: Safira
                   locale: pt-BR
                   lastDataLeft:
@@ -969,6 +1452,59 @@ paths:
               text: Atualiza o idioma preferido do usuário
               marks: []
       x-gitbook-description-html: <p>Atualiza o idioma preferido do usuário</p>
+  /vscode:
+    get:
+      tags:
+      - Usuário
+      summary: Obter dados do usuário para a extensão VS Code
+      description: >-
+        Retorna os dados do usuário autenticado junto com os dados das suas aplicações
+        (appsStatus) e os IDs das aplicações em que é moderador (appsTeam). Rota usada
+        pela extensão Discloud para VS Code.
+      operationId: getVscodeUser
+      responses:
+        '200':
+          description: Operação bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VscodeUserResponse'
+              example:
+                status: ok
+                user:
+                  userID: '803658045736878080'
+                  username: exemplo
+                  avatar: https://cdn.discordapp.com/embed/avatars/0.png
+                  plan: Safira
+                  locale: pt-BR
+                  totalRamMb: 16384
+                  ramUsedMb: 100
+                  apps:
+                  - '1745338954955'
+                  appsTeam: []
+                  subdomains: []
+                  customdomains: []
+                  appsStatus:
+                  - id: '1745338954955'
+                    name: Bot javascript
+                    type: 0
+                    online: true
+                    ram: 100
+                    ramKilled: false
+                    exitCode: 0
+                    lang: javascript
+                    mainFile: index.js
+                    avatarURL: https://i.imgur.com/bWhx7OT.png
+                    autoRestart: false
+                    apts: []
+                    clusterName: fenrir
+                    version: latest
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /upload:
     post:
       tags:
@@ -1001,14 +1537,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                - type: object
-                  properties:
-                    status:
-                      type: string
-                    message:
-                      type: string
-                - $ref: '#/components/schemas/UploadErrorResponse'
+                $ref: '#/components/schemas/UploadResponse'
               examples:
                 success:
                   summary: Upload bem-sucedido
@@ -1128,6 +1657,9 @@ paths:
                   lang: javascript
                   autoDeployGit: 'no'
                   autoRestart: false
+                  mods: []
+                  apts: []
+                  addedTimestamp: 1745338954955
           x-gitbook-description-html: <p>Informações da aplicação recuperadas com sucesso</p>
         '401':
           description: Erro de autenticação
@@ -1477,6 +2009,15 @@ paths:
                       ramKilled: false
                       exitCode: 0
                   summary: Aplicação já está ligada
+                all:
+                  value:
+                    status: ok
+                    apps:
+                      started:
+                      - '1745338954955'
+                      alreadyOnline: []
+                      alreadyInProcess: []
+                  summary: Todas as aplicações (appID = all)
           x-gitbook-description-html: <p>Aplicação iniciada com sucesso</p>
         '401':
           description: Erro de autenticação
@@ -1542,9 +2083,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppRestartResponse'
-              example:
-                status: ok
-                message: Sua aplicação foi reiniciada.
+              examples:
+                success:
+                  value:
+                    status: ok
+                    message: Sua aplicação foi reiniciada.
+                  summary: Aplicação reiniciada com sucesso
+                all:
+                  value:
+                    status: ok
+                    apps:
+                      restarted:
+                      - '1745338954955'
+                      alreadyOffline: []
+                      alreadyInProcess: []
+                  summary: Todas as aplicações (appID = all)
           x-gitbook-description-html: <p>Aplicação reiniciada com sucesso</p>
         '401':
           description: Erro de autenticação
@@ -1621,6 +2174,15 @@ paths:
                     status: error
                     message: Sua aplicação já está parada.
                   summary: Aplicação já parada
+                all:
+                  value:
+                    status: ok
+                    apps:
+                      stoped:
+                      - '1745338954955'
+                      alreadyOffline: []
+                      alreadyInProcess: []
+                  summary: Todas as aplicações (appID = all)
           x-gitbook-description-html: <p>Resposta de parada da aplicação</p>
         '401':
           description: Erro de autenticação
@@ -1795,16 +2357,15 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-              example:
-                summary: Commit bem-sucedido (pode expirar)
-                description: >-
-                  Quando bem-sucedido, a solicitação pode expirar sem retornar uma resposta
+                $ref: '#/components/schemas/AppCommitResponse'
+              examples:
+                success:
+                  summary: Commit bem-sucedido (pode expirar)
+                  description: >-
+                    Quando bem-sucedido, a solicitação pode expirar sem retornar uma resposta
+                  value:
+                    status: ok
+                    statusCode: 200
           x-gitbook-description-html: <p>Resposta de commit</p>
         '401':
           description: Erro de autenticação
@@ -1856,7 +2417,8 @@ paths:
       - Aplicações
       summary: Atualizar perfil da aplicação
       description: >-
-        Atualiza as informações de perfil (avatar e nome) de uma aplicação específica
+        Atualiza as informações de perfil (avatar e nome) de uma aplicação específica.
+        Os dois campos são opcionais; envie apenas os que deseja alterar.
       operationId: updateAppProfile
       parameters:
       - name: appID
@@ -1932,10 +2494,12 @@ paths:
             leaves:
             - object: leaf
               text: >-
-                Atualiza as informações de perfil (avatar e nome) de uma aplicação específica
+                Atualiza as informações de perfil (avatar e nome) de uma aplicação específica.
+                Os dois campos são opcionais; envie apenas os que deseja alterar.
               marks: []
       x-gitbook-description-html: >-
-        <p>Atualiza as informações de perfil (avatar e nome) de uma aplicação específica</p>
+        <p>Atualiza as informações de perfil (avatar e nome) de uma aplicação específica.
+        Os dois campos são opcionais; envie apenas os que deseja alterar.</p>
   /app/{appID}/explorer:
     get:
       tags:
@@ -2353,21 +2917,143 @@ paths:
               text: Executa um comando dentro do container da aplicação
               marks: []
       x-gitbook-description-html: <p>Executa um comando dentro do container da aplicação</p>
+  /app/{appID}/apt:
+    put:
+      tags:
+      - Aplicações
+      summary: Instalar pacotes APT
+      description: Instala um ou mais pacotes APT na aplicação
+      operationId: installAppApt
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppAptRequest'
+            example:
+              apt: ffmpeg,java
+      responses:
+        '200':
+          description: Resposta da instalação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAptResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Aplicações
+      summary: Desinstalar pacotes APT
+      description: Desinstala um ou mais pacotes APT da aplicação
+      operationId: uninstallAppApt
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppAptRequest'
+            example:
+              apt: ffmpeg
+      responses:
+        '200':
+          description: Resposta da desinstalação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppAptResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /app/{appID}/console:
+    put:
+      tags:
+      - Aplicações
+      summary: Enviar comando ao terminal da aplicação
+      description: Envia um comando para o terminal da aplicação e retorna a saída
+      operationId: runAppConsoleCommand
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppConsoleRequest'
+            example:
+              command: ls
+      responses:
+        '200':
+          description: Saída do comando
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppConsoleResponse'
+              example:
+                status: ok
+                apps:
+                  id: '1745338954955'
+                  shell:
+                    online: true
+                    stdout: |
+                      discloud.config
+                      index.js
+                      package.json
+                    stderr: ''
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Aplicação não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadErrorResponse'
   /app/{appID}/delete:
     delete:
       tags:
       - Aplicações
       summary: Deletar aplicação
-      description: Deleta permanentemente uma aplicação
+      description: Deleta permanentemente uma aplicação específica ou todas as aplicações
       operationId: deleteApp
       parameters:
       - name: appID
         in: path
         required: true
-        description: ID da aplicação a ser deletada
+        description: ID da aplicação a ser deletada ou "all" para deletar todas as aplicações
         schema:
           type: string
-        x-gitbook-description-html: <p>ID da aplicação a ser deletada</p>
+        x-gitbook-description-html: >-
+          <p>ID da aplicação a ser deletada ou "all" para deletar todas as aplicações</p>
       responses:
         '200':
           description: Aplicação deletada com sucesso
@@ -2375,9 +3061,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppDeleteResponse'
-              example:
-                status: ok
-                message: Sua aplicação foi removida.
+              examples:
+                success:
+                  value:
+                    status: ok
+                    message: Sua aplicação foi removida.
+                  summary: Aplicação deletada com sucesso
+                all:
+                  value:
+                    status: ok
+                    apps:
+                      removealled:
+                      - '1745338954955'
+                      alreadyOffline: []
+                      alreadyInProcess: []
+                  summary: Todas as aplicações (appID = all)
           x-gitbook-description-html: <p>Aplicação deletada com sucesso</p>
         '401':
           description: Erro de autenticação
@@ -2418,9 +3116,490 @@ paths:
           - object: text
             leaves:
             - object: leaf
-              text: Deleta permanentemente uma aplicação
+              text: Deleta permanentemente uma aplicação específica ou todas as aplicações
               marks: []
-      x-gitbook-description-html: <p>Deleta permanentemente uma aplicação</p>
+      x-gitbook-description-html: >-
+        <p>Deleta permanentemente uma aplicação específica ou todas as aplicações</p>
+  /app/{appID}/team:
+    get:
+      tags:
+      - Moderadores da Aplicação
+      summary: Listar moderadores da aplicação
+      description: Retorna os moderadores de uma aplicação e as suas permissões
+      operationId: getAppModerators
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Moderadores retornados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppModeratorListResponse'
+              example:
+                status: ok
+                team:
+                - modID: '197651928518230016'
+                  perms:
+                  - start_app
+                  - stop_app
+                  - restart_app
+                  - logs_app
+                  - status_app
+                  avatar: https://cdn.discordapp.com/embed/avatars/0.png
+                  username: exemplo
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Moderadores da Aplicação
+      summary: Adicionar moderador
+      description: Adiciona um moderador à aplicação com as permissões indicadas
+      operationId: addAppModerator
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppModeratorRequest'
+            example:
+              modID: '197651928518230016'
+              perms:
+              - start_app
+              - stop_app
+              - restart_app
+              - logs_app
+              - status_app
+      responses:
+        '200':
+          description: Moderador adicionado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppModeratorResponse'
+              example:
+                status: ok
+                app:
+                  appID: '1745338954955'
+                  modID: '197651928518230016'
+                  perms:
+                  - start_app
+                  - stop_app
+                  - restart_app
+                  - logs_app
+                  - status_app
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Moderadores da Aplicação
+      summary: Editar permissões de moderador
+      description: Substitui as permissões de um moderador da aplicação
+      operationId: editAppModerator
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppModeratorRequest'
+            example:
+              modID: '197651928518230016'
+              perms:
+              - logs_app
+              - status_app
+      responses:
+        '200':
+          description: Permissões atualizadas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppModeratorResponse'
+              example:
+                status: ok
+                app:
+                  appID: '1745338954955'
+                  modID: '197651928518230016'
+                  perms:
+                  - logs_app
+                  - status_app
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /app/{appID}/team/{modID}:
+    delete:
+      tags:
+      - Moderadores da Aplicação
+      summary: Remover moderador
+      description: Remove um moderador da aplicação
+      operationId: removeAppModerator
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      - name: modID
+        in: path
+        required: true
+        description: ID do moderador a remover
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Moderador removido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team:
+    get:
+      tags:
+      - Aplicações da Equipe
+      summary: Listar aplicações da equipe
+      description: >-
+        Retorna as aplicações de outros usuários em que você é moderador, com as suas
+        permissões em cada uma
+      operationId: listTeamApps
+      responses:
+        '200':
+          description: Aplicações retornadas com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamAppListResponse'
+              example:
+                status: ok
+                apps:
+                - id: '1745287471226'
+                  name: Temp1 - JS
+                  type: 0
+                  online: true
+                  ram: 100
+                  ramKilled: false
+                  exitCode: 0
+                  lang: javascript
+                  owner:
+                    name: exemplo
+                    avatar: https://cdn.discordapp.com/embed/avatars/0.png
+                  perms:
+                  - start_app
+                  - stop_app
+                  - restart_app
+                  - logs_app
+                  - status_app
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Você não é moderador de nenhuma aplicação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/status:
+    get:
+      tags:
+      - Aplicações da Equipe
+      summary: Obter status de uma aplicação da equipe
+      description: >-
+        Retorna o status de uma aplicação em que você é moderador. Requer a permissão
+        status_app.
+      operationId: getTeamAppStatus
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Status da aplicação obtido com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppStatusResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Aplicação não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadErrorResponse'
+  /team/{appID}/logs:
+    get:
+      tags:
+      - Aplicações da Equipe
+      summary: Obter logs de uma aplicação da equipe
+      description: >-
+        Retorna os logs de uma aplicação em que você é moderador, ou de todas com
+        "all". Requer a permissão logs_app.
+      operationId: getTeamAppLogs
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação ou "all" para todas as aplicações da equipe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Logs recuperados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppLogsResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/backup:
+    get:
+      tags:
+      - Aplicações da Equipe
+      summary: Obter backup de uma aplicação da equipe
+      description: >-
+        Gera e retorna o backup de uma aplicação em que você é moderador, ou de todas
+        com "all". Requer a permissão backup_app.
+      operationId: getTeamAppBackup
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação ou "all" para todas as aplicações da equipe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Backup gerado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBackupResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/start:
+    put:
+      tags:
+      - Aplicações da Equipe
+      summary: Iniciar aplicação da equipe
+      description: >-
+        Inicia uma aplicação em que você é moderador, ou todas com "all". Requer a
+        permissão start_app.
+      operationId: startTeamApp
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação ou "all" para todas as aplicações da equipe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resposta de início da aplicação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppStartResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/restart:
+    put:
+      tags:
+      - Aplicações da Equipe
+      summary: Reiniciar aplicação da equipe
+      description: >-
+        Reinicia uma aplicação em que você é moderador, ou todas com "all". Requer a
+        permissão restart_app.
+      operationId: restartTeamApp
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação ou "all" para todas as aplicações da equipe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resposta de reinício da aplicação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRestartResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/stop:
+    put:
+      tags:
+      - Aplicações da Equipe
+      summary: Parar aplicação da equipe
+      description: >-
+        Para uma aplicação em que você é moderador, ou todas com "all". Requer a
+        permissão stop_app.
+      operationId: stopTeamApp
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação ou "all" para todas as aplicações da equipe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resposta de parada da aplicação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppStopResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/ram:
+    put:
+      tags:
+      - Aplicações da Equipe
+      summary: Atualizar RAM de uma aplicação da equipe
+      description: >-
+        Atualiza a RAM de uma aplicação em que você é moderador. Requer a permissão
+        edit_ram.
+      operationId: updateTeamAppRam
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppRamUpdateRequest'
+            example:
+              ramMB: 200
+      responses:
+        '200':
+          description: Resposta de atualização de RAM
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRamUpdateResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /team/{appID}/commit:
+    put:
+      tags:
+      - Aplicações da Equipe
+      summary: Atualizar código de uma aplicação da equipe
+      description: >-
+        Envia uma nova versão do código de uma aplicação em que você é moderador.
+        Requer a permissão commit_app.
+      operationId: commitTeamAppChanges
+      parameters:
+      - name: appID
+        in: path
+        required: true
+        description: ID da aplicação
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Arquivo da aplicação a ser enviado (formato .ZIP)
+      responses:
+        '200':
+          description: Resposta de commit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppCommitResponse'
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /subdomain/all:
     get:
       tags:
@@ -2640,6 +3819,56 @@ paths:
                     content: 192.0.2.1
         '401':
           description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /customdomain/{domainName}:
+    get:
+      tags:
+      - Domínios Customizados
+      summary: Obter domínio customizado
+      description: Retorna as informações de um domínio customizado do usuário.
+      operationId: getCustomDomain
+      parameters:
+      - name: domainName
+        in: path
+        required: true
+        description: Domínio customizado a consultar
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Domínio customizado retornado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomDomainResponse'
+              example:
+                status: ok
+                domain:
+                  id: example.com
+                  dns_status: active
+                  date: 1745100000000
+                  isLegacy: false
+                  app:
+                    id: '1719010867306'
+                    name: example.com
+                    online: true
+                    type: 1
+                  instructions:
+                  - type: A
+                    name: example.com
+                    content: 192.0.2.1
+        '401':
+          description: Erro de autenticação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Domínio não encontrado
           content:
             application/json:
               schema:
