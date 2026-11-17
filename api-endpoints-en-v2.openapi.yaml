@@ -258,12 +258,6 @@ components:
           type: boolean
           description: Whether the application auto-restarts on failure
           x-gitbook-description-html: <p>Whether the application auto-restarts on failure</p>
-        mods:
-          type: array
-          items:
-            type: string
-          description: IDs of the application's moderators
-          x-gitbook-description-html: <p>IDs of the application's moderators</p>
         apts:
           type: array
           items:
@@ -638,76 +632,6 @@ components:
                 stderr:
                   type: string
                   description: Standard error of the command
-    AppModeratorPermission:
-      type: string
-      enum:
-        - backup_app
-        - commit_app
-        - edit_ram
-        - logs_app
-        - restart_app
-        - start_app
-        - status_app
-        - stop_app
-    AppModerator:
-      type: object
-      properties:
-        modID:
-          type: string
-          description: User ID of the moderator
-        perms:
-          type: array
-          items:
-            $ref: "#/components/schemas/AppModeratorPermission"
-          description: Permissions of the moderator
-        avatar:
-          type: string
-          nullable: true
-          description: URL of the moderator's avatar
-        username:
-          type: string
-          nullable: true
-          description: Username of the moderator
-    AppModeratorRequest:
-      type: object
-      required:
-        - modID
-        - perms
-      properties:
-        modID:
-          type: string
-          description: User ID of the moderator
-        perms:
-          type: array
-          items:
-            $ref: "#/components/schemas/AppModeratorPermission"
-          description: Permissions to grant to the moderator
-    AppModeratorListResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-        team:
-          type: array
-          items:
-            $ref: "#/components/schemas/AppModerator"
-    AppModeratorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-        app:
-          allOf:
-            - $ref: "#/components/schemas/AppModerator"
-            - type: object
-              properties:
-                appID:
-                  type: string
-                  description: Unique identifier of the application
     TeamApp:
       type: object
       properties:
@@ -748,8 +672,8 @@ components:
         perms:
           type: array
           items:
-            $ref: "#/components/schemas/AppModeratorPermission"
-          description: Your permissions on this application
+            type: string
+          description: Your permissions on this application, defined by your Team role
     TeamAppListResponse:
       type: object
       properties:
@@ -803,7 +727,7 @@ components:
               type: array
               items:
                 type: string
-              description: List of application IDs the user moderates
+              description: List of IDs of applications shared with the user through a Team
             subdomains:
               type: array
               items:
@@ -1120,26 +1044,8 @@ tags:
                   text: Operations about applications
                   marks: []
     x-gitbook-description-html: <p>Operations about applications</p>
-  - name: App Moderators
-    description: Operations about the moderators of your applications
-    x-gitbook-description-document:
-      object: document
-      data:
-        schemaVersion: 9
-      nodes:
-        - object: block
-          type: paragraph
-          isVoid: false
-          data: {}
-          nodes:
-            - object: text
-              leaves:
-                - object: leaf
-                  text: Operations about the moderators of your applications
-                  marks: []
-    x-gitbook-description-html: <p>Operations about the moderators of your applications</p>
   - name: Team Apps
-    description: Operations about other users' applications you moderate
+    description: Operations about applications shared with you through a Team
     x-gitbook-description-document:
       object: document
       data:
@@ -1153,9 +1059,9 @@ tags:
             - object: text
               leaves:
                 - object: leaf
-                  text: Operations about other users' applications you moderate
+                  text: Operations about applications shared with you through a Team
                   marks: []
-    x-gitbook-description-html: <p>Operations about other users' applications you moderate</p>
+    x-gitbook-description-html: <p>Operations about applications shared with you through a Team</p>
   - name: Team Management
     description: Operations about team management
     x-gitbook-description-document:
@@ -1490,7 +1396,7 @@ paths:
       summary: Get user data for the VS Code extension
       description: >-
         Returns the authenticated user's data together with the data of their applications
-        (appsStatus) and the IDs of the applications they moderate (appsTeam). Route used
+        (appsStatus) and the IDs of their team apps (appsTeam). Route used
         by the Discloud extension for VS Code.
       operationId: getVscodeUser
       responses:
@@ -1686,7 +1592,6 @@ paths:
                   lang: javascript
                   autoDeployGit: "no"
                   autoRestart: false
-                  mods: []
                   apts: []
                   addedTimestamp: 1745338954955
           x-gitbook-description-html: <p>Application information retrieved successfully</p>
@@ -3203,187 +3108,14 @@ paths:
                     marks: []
       x-gitbook-description-html: >-
         <p>Permanently deletes a specific application or all applications</p>
-  /app/{appID}/team:
-    get:
-      tags:
-        - App Moderators
-      summary: List application moderators
-      description: Returns the moderators of an application and their permissions
-      operationId: getAppModerators
-      parameters:
-        - name: appID
-          in: path
-          required: true
-          description: ID of the application
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Moderators returned successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AppModeratorListResponse"
-              example:
-                status: ok
-                team:
-                  - modID: "197651928518230016"
-                    perms:
-                      - start_app
-                      - stop_app
-                      - restart_app
-                      - logs_app
-                      - status_app
-                    avatar: https://cdn.discordapp.com/embed/avatars/0.png
-                    username: exemplo
-        "401":
-          description: Authentication error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      tags:
-        - App Moderators
-      summary: Add moderator
-      description: Adds a moderator to the application with the given permissions
-      operationId: addAppModerator
-      parameters:
-        - name: appID
-          in: path
-          required: true
-          description: ID of the application
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AppModeratorRequest"
-            example:
-              modID: "197651928518230016"
-              perms:
-                - start_app
-                - stop_app
-                - restart_app
-                - logs_app
-                - status_app
-      responses:
-        "200":
-          description: Moderator added
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AppModeratorResponse"
-              example:
-                status: ok
-                app:
-                  appID: "1745338954955"
-                  modID: "197651928518230016"
-                  perms:
-                    - start_app
-                    - stop_app
-                    - restart_app
-                    - logs_app
-                    - status_app
-        "401":
-          description: Authentication error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    put:
-      tags:
-        - App Moderators
-      summary: Edit moderator permissions
-      description: Replaces the permissions of a moderator of the application
-      operationId: editAppModerator
-      parameters:
-        - name: appID
-          in: path
-          required: true
-          description: ID of the application
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AppModeratorRequest"
-            example:
-              modID: "197651928518230016"
-              perms:
-                - logs_app
-                - status_app
-      responses:
-        "200":
-          description: Permissions updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AppModeratorResponse"
-              example:
-                status: ok
-                app:
-                  appID: "1745338954955"
-                  modID: "197651928518230016"
-                  perms:
-                    - logs_app
-                    - status_app
-        "401":
-          description: Authentication error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /app/{appID}/team/{modID}:
-    delete:
-      tags:
-        - App Moderators
-      summary: Remove moderator
-      description: Removes a moderator from the application
-      operationId: removeAppModerator
-      parameters:
-        - name: appID
-          in: path
-          required: true
-          description: ID of the application
-          schema:
-            type: string
-        - name: modID
-          in: path
-          required: true
-          description: ID of the moderator to remove
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Moderator removed
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-        "401":
-          description: Authentication error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /team:
     get:
       tags:
         - Team Apps
       summary: List team apps
       description: >-
-        Returns other users' applications you moderate, with your permissions on
-        each one
+        Returns the applications shared with you through a Team, with your
+        permissions on each one
       operationId: listTeamApps
       responses:
         "200":
@@ -3419,7 +3151,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
         "403":
-          description: You are not a moderator of any application
+          description: No applications shared with you
           content:
             application/json:
               schema:
@@ -3430,8 +3162,7 @@ paths:
         - Team Apps
       summary: Get team app status
       description: >-
-        Returns the status of an application you moderate. Requires the status_app
-        permission.
+        Returns the status of a team app. Requires the status_app permission.
       operationId: getTeamAppStatus
       parameters:
         - name: appID
@@ -3465,8 +3196,8 @@ paths:
         - Team Apps
       summary: Get team app logs
       description: >-
-        Returns the logs of an application you moderate, or of all of them with
-        "all". Requires the logs_app permission.
+        Returns the logs of a team app, or of all of them with "all". Requires the
+        logs_app permission.
       operationId: getTeamAppLogs
       parameters:
         - name: appID
@@ -3494,8 +3225,8 @@ paths:
         - Team Apps
       summary: Get team app backup
       description: >-
-        Generates and returns the backup of an application you moderate, or of all
-        of them with "all". Requires the backup_app permission.
+        Generates and returns the backup of a team app, or of all of them with
+        "all". Requires the backup_app permission.
       operationId: getTeamAppBackup
       parameters:
         - name: appID
@@ -3523,8 +3254,8 @@ paths:
         - Team Apps
       summary: Start team app
       description: >-
-        Starts an application you moderate, or all of them with "all". Requires the
-        start_app permission.
+        Starts a team app, or all of them with "all". Requires the start_app
+        permission.
       operationId: startTeamApp
       parameters:
         - name: appID
@@ -3552,8 +3283,8 @@ paths:
         - Team Apps
       summary: Restart team app
       description: >-
-        Restarts an application you moderate, or all of them with "all". Requires
-        the restart_app permission.
+        Restarts a team app, or all of them with "all". Requires the restart_app
+        permission.
       operationId: restartTeamApp
       parameters:
         - name: appID
@@ -3581,8 +3312,8 @@ paths:
         - Team Apps
       summary: Stop team app
       description: >-
-        Stops an application you moderate, or all of them with "all". Requires the
-        stop_app permission.
+        Stops a team app, or all of them with "all". Requires the stop_app
+        permission.
       operationId: stopTeamApp
       parameters:
         - name: appID
@@ -3610,8 +3341,7 @@ paths:
         - Team Apps
       summary: Update team app RAM
       description: >-
-        Updates the RAM of an application you moderate. Requires the edit_ram
-        permission.
+        Updates the RAM of a team app. Requires the edit_ram permission.
       operationId: updateTeamAppRam
       parameters:
         - name: appID
@@ -3647,8 +3377,8 @@ paths:
         - Team Apps
       summary: Update team app code
       description: >-
-        Uploads a new version of the code of an application you moderate. Requires
-        the commit_app permission.
+        Uploads a new version of the code of a team app. Requires the commit_app
+        permission.
       operationId: commitTeamAppChanges
       parameters:
         - name: appID
