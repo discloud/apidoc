@@ -260,12 +260,6 @@ components:
           type: boolean
           description: Se a aplicação reinicia automaticamente em caso de falha
           x-gitbook-description-html: <p>Se a aplicação reinicia automaticamente em caso de falha</p>
-        mods:
-          type: array
-          items:
-            type: string
-          description: IDs dos moderadores da aplicação
-          x-gitbook-description-html: <p>IDs dos moderadores da aplicação</p>
         apts:
           type: array
           items:
@@ -642,76 +636,6 @@ components:
                 stderr:
                   type: string
                   description: Saída de erro do comando
-    AppModeratorPermission:
-      type: string
-      enum:
-      - backup_app
-      - commit_app
-      - edit_ram
-      - logs_app
-      - restart_app
-      - start_app
-      - status_app
-      - stop_app
-    AppModerator:
-      type: object
-      properties:
-        modID:
-          type: string
-          description: ID do usuário moderador
-        perms:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppModeratorPermission'
-          description: Permissões do moderador
-        avatar:
-          type: string
-          nullable: true
-          description: URL do avatar do moderador
-        username:
-          type: string
-          nullable: true
-          description: Nome de usuário do moderador
-    AppModeratorRequest:
-      type: object
-      required:
-      - modID
-      - perms
-      properties:
-        modID:
-          type: string
-          description: ID do usuário moderador
-        perms:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppModeratorPermission'
-          description: Permissões a conceder ao moderador
-    AppModeratorListResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-        team:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppModerator'
-    AppModeratorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-        app:
-          allOf:
-          - $ref: '#/components/schemas/AppModerator'
-          - type: object
-            properties:
-              appID:
-                type: string
-                description: ID da aplicação
     TeamApp:
       type: object
       properties:
@@ -753,8 +677,8 @@ components:
         perms:
           type: array
           items:
-            $ref: '#/components/schemas/AppModeratorPermission'
-          description: As suas permissões nesta aplicação
+            type: string
+          description: Suas permissões nesta aplicação, definidas pelo seu papel na equipe
     TeamAppListResponse:
       type: object
       properties:
@@ -808,7 +732,7 @@ components:
               type: array
               items:
                 type: string
-              description: Lista de IDs das aplicações em que o usuário é moderador
+              description: Lista de IDs das aplicações compartilhadas com o usuário através de uma equipe
             subdomains:
               type: array
               items:
@@ -1125,26 +1049,8 @@ tags:
           text: Operações sobre Aplicações
           marks: []
   x-gitbook-description-html: <p>Operações sobre Aplicações</p>
-- name: Moderadores da Aplicação
-  description: Operações sobre os moderadores das suas aplicações
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
-      nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre os moderadores das suas aplicações
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre os moderadores das suas aplicações</p>
 - name: Aplicações da Equipe
-  description: Operações sobre aplicações de outros usuários em que você é moderador
+  description: Operações sobre aplicações compartilhadas com você através de uma equipe
   x-gitbook-description-document:
     object: document
     data:
@@ -1158,9 +1064,9 @@ tags:
       - object: text
         leaves:
         - object: leaf
-          text: Operações sobre aplicações de outros usuários em que você é moderador
+          text: Operações sobre aplicações compartilhadas com você através de uma equipe
           marks: []
-  x-gitbook-description-html: <p>Operações sobre aplicações de outros usuários em que você é moderador</p>
+  x-gitbook-description-html: <p>Operações sobre aplicações compartilhadas com você através de uma equipe</p>
 - name: Gerenciamento de Equipe
   description: Operações sobre gerenciamento de equipe
   x-gitbook-description-document:
@@ -1459,7 +1365,7 @@ paths:
       summary: Obter dados do usuário para a extensão VS Code
       description: >-
         Retorna os dados do usuário autenticado junto com os dados das suas aplicações
-        (appsStatus) e os IDs das aplicações em que é moderador (appsTeam). Rota usada
+        (appsStatus) e os IDs das aplicações da equipe (appsTeam). Rota usada
         pela extensão Discloud para VS Code.
       operationId: getVscodeUser
       responses:
@@ -1657,7 +1563,6 @@ paths:
                   lang: javascript
                   autoDeployGit: 'no'
                   autoRestart: false
-                  mods: []
                   apts: []
                   addedTimestamp: 1745338954955
           x-gitbook-description-html: <p>Informações da aplicação recuperadas com sucesso</p>
@@ -3120,187 +3025,14 @@ paths:
               marks: []
       x-gitbook-description-html: >-
         <p>Deleta permanentemente uma aplicação específica ou todas as aplicações</p>
-  /app/{appID}/team:
-    get:
-      tags:
-      - Moderadores da Aplicação
-      summary: Listar moderadores da aplicação
-      description: Retorna os moderadores de uma aplicação e as suas permissões
-      operationId: getAppModerators
-      parameters:
-      - name: appID
-        in: path
-        required: true
-        description: ID da aplicação
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Moderadores retornados com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppModeratorListResponse'
-              example:
-                status: ok
-                team:
-                - modID: '197651928518230016'
-                  perms:
-                  - start_app
-                  - stop_app
-                  - restart_app
-                  - logs_app
-                  - status_app
-                  avatar: https://cdn.discordapp.com/embed/avatars/0.png
-                  username: exemplo
-        '401':
-          description: Erro de autenticação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    post:
-      tags:
-      - Moderadores da Aplicação
-      summary: Adicionar moderador
-      description: Adiciona um moderador à aplicação com as permissões indicadas
-      operationId: addAppModerator
-      parameters:
-      - name: appID
-        in: path
-        required: true
-        description: ID da aplicação
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AppModeratorRequest'
-            example:
-              modID: '197651928518230016'
-              perms:
-              - start_app
-              - stop_app
-              - restart_app
-              - logs_app
-              - status_app
-      responses:
-        '200':
-          description: Moderador adicionado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppModeratorResponse'
-              example:
-                status: ok
-                app:
-                  appID: '1745338954955'
-                  modID: '197651928518230016'
-                  perms:
-                  - start_app
-                  - stop_app
-                  - restart_app
-                  - logs_app
-                  - status_app
-        '401':
-          description: Erro de autenticação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      tags:
-      - Moderadores da Aplicação
-      summary: Editar permissões de moderador
-      description: Substitui as permissões de um moderador da aplicação
-      operationId: editAppModerator
-      parameters:
-      - name: appID
-        in: path
-        required: true
-        description: ID da aplicação
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AppModeratorRequest'
-            example:
-              modID: '197651928518230016'
-              perms:
-              - logs_app
-              - status_app
-      responses:
-        '200':
-          description: Permissões atualizadas
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppModeratorResponse'
-              example:
-                status: ok
-                app:
-                  appID: '1745338954955'
-                  modID: '197651928518230016'
-                  perms:
-                  - logs_app
-                  - status_app
-        '401':
-          description: Erro de autenticação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /app/{appID}/team/{modID}:
-    delete:
-      tags:
-      - Moderadores da Aplicação
-      summary: Remover moderador
-      description: Remove um moderador da aplicação
-      operationId: removeAppModerator
-      parameters:
-      - name: appID
-        in: path
-        required: true
-        description: ID da aplicação
-        schema:
-          type: string
-      - name: modID
-        in: path
-        required: true
-        description: ID do moderador a remover
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Moderador removido
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-        '401':
-          description: Erro de autenticação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /team:
     get:
       tags:
       - Aplicações da Equipe
       summary: Listar aplicações da equipe
       description: >-
-        Retorna as aplicações de outros usuários em que você é moderador, com as suas
-        permissões em cada uma
+        Retorna as aplicações compartilhadas com você através de uma equipe, com as
+        suas permissões em cada uma
       operationId: listTeamApps
       responses:
         '200':
@@ -3336,7 +3068,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Você não é moderador de nenhuma aplicação
+          description: Nenhuma aplicação compartilhada com você
           content:
             application/json:
               schema:
@@ -3347,8 +3079,7 @@ paths:
       - Aplicações da Equipe
       summary: Obter status de uma aplicação da equipe
       description: >-
-        Retorna o status de uma aplicação em que você é moderador. Requer a permissão
-        status_app.
+        Retorna o status de uma aplicação da equipe. Requer a permissão status_app.
       operationId: getTeamAppStatus
       parameters:
       - name: appID
@@ -3382,8 +3113,8 @@ paths:
       - Aplicações da Equipe
       summary: Obter logs de uma aplicação da equipe
       description: >-
-        Retorna os logs de uma aplicação em que você é moderador, ou de todas com
-        "all". Requer a permissão logs_app.
+        Retorna os logs de uma aplicação da equipe, ou de todas com "all". Requer a
+        permissão logs_app.
       operationId: getTeamAppLogs
       parameters:
       - name: appID
@@ -3411,8 +3142,8 @@ paths:
       - Aplicações da Equipe
       summary: Obter backup de uma aplicação da equipe
       description: >-
-        Gera e retorna o backup de uma aplicação em que você é moderador, ou de todas
-        com "all". Requer a permissão backup_app.
+        Gera e retorna o backup de uma aplicação da equipe, ou de todas com "all".
+        Requer a permissão backup_app.
       operationId: getTeamAppBackup
       parameters:
       - name: appID
@@ -3440,8 +3171,8 @@ paths:
       - Aplicações da Equipe
       summary: Iniciar aplicação da equipe
       description: >-
-        Inicia uma aplicação em que você é moderador, ou todas com "all". Requer a
-        permissão start_app.
+        Inicia uma aplicação da equipe, ou todas com "all". Requer a permissão
+        start_app.
       operationId: startTeamApp
       parameters:
       - name: appID
@@ -3469,8 +3200,8 @@ paths:
       - Aplicações da Equipe
       summary: Reiniciar aplicação da equipe
       description: >-
-        Reinicia uma aplicação em que você é moderador, ou todas com "all". Requer a
-        permissão restart_app.
+        Reinicia uma aplicação da equipe, ou todas com "all". Requer a permissão
+        restart_app.
       operationId: restartTeamApp
       parameters:
       - name: appID
@@ -3498,8 +3229,8 @@ paths:
       - Aplicações da Equipe
       summary: Parar aplicação da equipe
       description: >-
-        Para uma aplicação em que você é moderador, ou todas com "all". Requer a
-        permissão stop_app.
+        Para uma aplicação da equipe, ou todas com "all". Requer a permissão
+        stop_app.
       operationId: stopTeamApp
       parameters:
       - name: appID
@@ -3527,8 +3258,7 @@ paths:
       - Aplicações da Equipe
       summary: Atualizar RAM de uma aplicação da equipe
       description: >-
-        Atualiza a RAM de uma aplicação em que você é moderador. Requer a permissão
-        edit_ram.
+        Atualiza a RAM de uma aplicação da equipe. Requer a permissão edit_ram.
       operationId: updateTeamAppRam
       parameters:
       - name: appID
@@ -3564,8 +3294,8 @@ paths:
       - Aplicações da Equipe
       summary: Atualizar código de uma aplicação da equipe
       description: >-
-        Envia uma nova versão do código de uma aplicação em que você é moderador.
-        Requer a permissão commit_app.
+        Envia uma nova versão do código de uma aplicação da equipe. Requer a
+        permissão commit_app.
       operationId: commitTeamAppChanges
       parameters:
       - name: appID
