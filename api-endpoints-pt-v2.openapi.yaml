@@ -1217,34 +1217,32 @@ tags:
     <p>Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
     Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
     respondem de imediato com um id; consulte GET /database/{dbID} para o estado.</p>
-  - name: CDN
-    description: >-
-      CDN pública de arquivos da conta (add-on `cdn`). Upload/gestão por esta API;
-      leitura pública em https://cdn.discloud.com/{userId}/{path}. Escrita exige add-on CDN
-      ativo. Prefira PUT /cdn/upload até ~100 MB; use /cdn/multipart para arquivos maiores.
-      Respostas flat (sem envelope `data`). Nunca expõe URL de storage de terceiros.
-    x-gitbook-description-document:
-      object: document
-      data:
-        schemaVersion: 9
+- name: CDN
+  description: >-
+    CDN pública de arquivos da conta (add-on `cdn`). Upload/gestão por esta API;
+    leitura pública em https://cdn.discloud.com/{userId}/{path}. Escrita exige add-on CDN
+    ativo. Prefira PUT /cdn/upload até ~100 MB; use /cdn/multipart para arquivos maiores.
+    Respostas flat (sem envelope `data`). Nunca expõe URL de storage de terceiros.
+  x-gitbook-description-document:
+    object: document
+    data:
+      schemaVersion: 9
+    nodes:
+    - object: block
+      type: paragraph
+      isVoid: false
+      data: {}
       nodes:
-        - object: block
-          type: paragraph
-          isVoid: false
-          data: {}
-          nodes:
-            - object: text
-              leaves:
-                - object: leaf
-                  text: >-
-                    CDN pública de arquivos da conta (add-on cdn). Upload/gestão por esta API;
-                    leitura pública em https://cdn.discloud.com/{userId}/{path}.
-                  marks: []
-    x-gitbook-description-html: >-
-      <p>CDN pública de arquivos da conta (add-on <code>cdn</code>). Upload/gestão por esta API;
-      leitura pública em <code>https://cdn.discloud.com/{userId}/{path}</code>. Escrita exige add-on CDN
-      ativo. Prefira <code>PUT /cdn/upload</code> até ~100&nbsp;MB; use
-      <code>/cdn/multipart</code> para arquivos maiores. Respostas flat (sem envelope <code>data</code>).</p>
+      - object: text
+        leaves:
+        - object: leaf
+          text: CDN pública de arquivos da conta (add-on cdn). Upload/gestão por esta API; leitura pública em https://cdn.discloud.com/{userId}/{path}.
+          marks: []
+  x-gitbook-description-html: >-
+    <p>CDN pública de arquivos da conta (add-on <code>cdn</code>). Upload/gestão por esta API;
+    leitura pública em <code>https://cdn.discloud.com/{userId}/{path}</code>. Escrita exige add-on CDN
+    ativo. Prefira <code>PUT /cdn/upload</code> até ~100&nbsp;MB; use
+    <code>/cdn/multipart</code> para arquivos maiores. Respostas flat (sem envelope <code>data</code>).</p>
 paths:
   /user:
     get:
