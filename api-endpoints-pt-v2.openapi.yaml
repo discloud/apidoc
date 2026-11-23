@@ -7229,45 +7229,6 @@ paths:
           x-gitbook-description-html: <p>Erro de autenticação</p>
       x-gitbook-description-html: <p>Retorna uso da CDN e quota do add-on.</p>
 
-  /cdn/stat:
-    get:
-      tags:
-        - CDN
-      summary: Resumo da conta CDN
-      description: >-
-        Resumo da conta (uso + base pública). Opcional `countObjects=1` para contar objetos (mais lento).
-      operationId: getCdnStat
-      parameters:
-        - name: countObjects
-          in: query
-          required: false
-          schema:
-            type: string
-            enum: ["0", "1", "true", "false"]
-          description: Use 1/true para contar objetos
-      responses:
-        "200":
-          description: Stat retornado
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                hasAddon: true
-                quotaGb: 50
-                usedBytes: 1048576
-                publicBaseUrl: https://cdn.discloud.com
-          x-gitbook-description-html: <p>Stat retornado</p>
-        "401":
-          description: "Erro de autenticação"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Erro de autenticação</p>
-      x-gitbook-description-html: <p>Resumo da conta CDN.</p>
-
   /cdn/list:
     get:
       tags:
@@ -7629,63 +7590,6 @@ paths:
                 $ref: "#/components/schemas/Error"
           x-gitbook-description-html: <p>Requisição inválida</p>
       x-gitbook-description-html: <p>Apaga pasta/prefixo da CDN.</p>
-
-  /cdn/account:
-    delete:
-      tags:
-        - CDN
-      summary: Limpar toda a CDN da conta
-      description: >-
-        Apaga todos os objetos e multiparts incompletos do usuário autenticado. Irreversível.
-      operationId: purgeCdnAccount
-      responses:
-        "200":
-          description: Conta limpa
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                deletedCount: 12
-                freedBytes: 987654
-                abortedMultipart: 1
-          x-gitbook-description-html: <p>Conta limpa</p>
-        "401":
-          description: "Erro de autenticação"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Erro de autenticação</p>
-      x-gitbook-description-html: <p>Limpa todos os dados CDN da conta.</p>
-
-  /cdn/reconcile:
-    post:
-      tags:
-        - CDN
-      summary: Reconciliar uso da CDN
-      description: Recalcula bytes usados a partir do storage (manutenção).
-      operationId: reconcileCdnUsage
-      responses:
-        "200":
-          description: Reconciliado
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                usedBytes: 1048576
-          x-gitbook-description-html: <p>Reconciliado</p>
-        "401":
-          description: "Erro de autenticação"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Erro de autenticação</p>
-      x-gitbook-description-html: <p>Reconcilia contadores de uso da CDN.</p>
 
   /cdn/multipart:
     post:

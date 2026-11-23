@@ -7319,45 +7319,6 @@ paths:
           x-gitbook-description-html: <p>Authentication error</p>
       x-gitbook-description-html: <p>Returns CDN usage and add-on quota.</p>
 
-  /cdn/stat:
-    get:
-      tags:
-        - CDN
-      summary: CDN account summary
-      description: >-
-        Account summary (usage + public base). Optional `countObjects=1` to count objects (slower).
-      operationId: getCdnStat
-      parameters:
-        - name: countObjects
-          in: query
-          required: false
-          schema:
-            type: string
-            enum: ["0", "1", "true", "false"]
-          description: Set to 1/true to count objects
-      responses:
-        "200":
-          description: Stat returned
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                hasAddon: true
-                quotaGb: 50
-                usedBytes: 1048576
-                publicBaseUrl: https://cdn.discloud.com
-          x-gitbook-description-html: <p>Stat returned</p>
-        "401":
-          description: "Authentication error"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Authentication error</p>
-      x-gitbook-description-html: <p>CDN account summary.</p>
-
   /cdn/list:
     get:
       tags:
@@ -7719,63 +7680,6 @@ paths:
                 $ref: "#/components/schemas/Error"
           x-gitbook-description-html: <p>Invalid request</p>
       x-gitbook-description-html: <p>Delete CDN folder/prefix.</p>
-
-  /cdn/account:
-    delete:
-      tags:
-        - CDN
-      summary: Purge entire CDN account
-      description: >-
-        Deletes all objects and incomplete multiparts for the authenticated user. Irreversible.
-      operationId: purgeCdnAccount
-      responses:
-        "200":
-          description: Account purged
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                deletedCount: 12
-                freedBytes: 987654
-                abortedMultipart: 1
-          x-gitbook-description-html: <p>Account purged</p>
-        "401":
-          description: "Authentication error"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Authentication error</p>
-      x-gitbook-description-html: <p>Purge all CDN data for the account.</p>
-
-  /cdn/reconcile:
-    post:
-      tags:
-        - CDN
-      summary: Reconcile CDN usage
-      description: Recalculates used bytes from storage (maintenance).
-      operationId: reconcileCdnUsage
-      responses:
-        "200":
-          description: Reconciled
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                status: ok
-                usedBytes: 1048576
-          x-gitbook-description-html: <p>Reconciled</p>
-        "401":
-          description: "Authentication error"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-          x-gitbook-description-html: <p>Authentication error</p>
-      x-gitbook-description-html: <p>Reconcile CDN usage counters.</p>
 
   /cdn/multipart:
     post:
