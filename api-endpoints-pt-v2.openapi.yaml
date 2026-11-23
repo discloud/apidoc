@@ -1013,236 +1013,238 @@ components:
 security:
 - ApiKeyAuth: []
 tags:
-- name: Usuário
-  description: Operações sobre usuários
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+  - name: Usuário
+    description: Operações sobre usuários
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre usuários
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre usuários</p>
-- name: Aplicações
-  description: Operações sobre Aplicações
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre usuários
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre usuários</p>
+  - name: Aplicações
+    description: Operações sobre Aplicações
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre Aplicações
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre Aplicações</p>
-- name: Aplicações da Equipe
-  description: Operações sobre aplicações compartilhadas com você através de uma equipe
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre Aplicações
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre Aplicações</p>
+  - name: Aplicações da Equipe
+    description: Operações sobre aplicações compartilhadas com você através de uma equipe
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre aplicações compartilhadas com você através de uma equipe
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre aplicações compartilhadas com você através de uma equipe</p>
-- name: Gerenciamento de Equipe
-  description: Operações sobre gerenciamento de equipe
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre aplicações compartilhadas com você através de uma equipe
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre aplicações compartilhadas com você através de uma equipe</p>
+  - name: Gerenciamento de Equipe
+    description: Operações sobre gerenciamento de equipe
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre gerenciamento de equipe
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre gerenciamento de equipe</p>
-- name: Membro da Equipe
-  description: Operações sobre membros da equipe
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre gerenciamento de equipe
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre gerenciamento de equipe</p>
+  - name: Membro da Equipe
+    description: Operações sobre membros da equipe
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre membros da equipe
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre membros da equipe</p>
-- name: Subdomínios
-  description: Operações sobre subdomínios
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre membros da equipe
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre membros da equipe</p>
+  - name: Subdomínios
+    description: Operações sobre subdomínios
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre subdomínios
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre subdomínios</p>
-- name: Domínios Customizados
-  description: Operações sobre domínios customizados
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre subdomínios
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre subdomínios</p>
+  - name: Domínios Customizados
+    description: Operações sobre domínios customizados
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre domínios customizados
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre domínios customizados</p>
-- name: Snapshot
-  description: Operações sobre backups versionados (snapshots)
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre domínios customizados
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre domínios customizados</p>
+  - name: Snapshot
+    description: Operações sobre backups versionados (snapshots)
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre backups versionados (snapshots)
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre backups versionados (snapshots)</p>
-- name: Variáveis de Ambiente
-  description: Operações sobre variáveis de ambiente (conta, projeto e app)
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre backups versionados (snapshots)
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre backups versionados (snapshots)</p>
+  - name: Variáveis de Ambiente
+    description: Operações sobre variáveis de ambiente (conta, projeto e app)
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre variáveis de ambiente (conta, projeto e app)
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre variáveis de ambiente (conta, projeto e app)</p>
-- name: Projetos
-  description: Operações sobre projetos (agrupamento de apps)
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre variáveis de ambiente (conta, projeto e app)
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre variáveis de ambiente (conta, projeto e app)</p>
+  - name: Projetos
+    description: Operações sobre projetos (agrupamento de apps)
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre projetos (agrupamento de apps)
-          marks: []
-  x-gitbook-description-html: <p>Operações sobre projetos (agrupamento de apps)</p>
-- name: Bancos de Dados
-  description: >-
-    Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
-    Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
-    respondem de imediato com um id; consulte GET /database/{dbID} para o estado.
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+      - object: block
+        type: paragraph
+        isVoid: false
+        data: {}
+        nodes:
+        - object: text
+          leaves:
+          - object: leaf
+            text: Operações sobre projetos (agrupamento de apps)
+            marks: []
+    x-gitbook-description-html: <p>Operações sobre projetos (agrupamento de apps)</p>
+  - name: Bancos de Dados
+    description: >-
+      Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
+      Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
+      respondem de imediato com um id; consulte GET /database/{dbID} para o estado.
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs)
-          marks: []
-  x-gitbook-description-html: >-
-    <p>Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
-    Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
-    respondem de imediato com um id; consulte GET /database/{dbID} para o estado.</p>
-- name: CDN
-  description: >-
-    CDN pública de arquivos da conta (add-on `cdn`). Upload/gestão por esta API;
-    leitura pública em https://cdn.discloud.com/{userId}/{path}. Escrita exige add-on CDN
-    ativo. Prefira PUT /cdn/upload até ~100 MB; use /cdn/multipart para arquivos maiores.
-    Respostas flat (sem envelope `data`). Nunca expõe URL de storage de terceiros.
-  x-gitbook-description-document:
-    object: document
-    data:
-      schemaVersion: 9
-    nodes:
-    - object: block
-      type: paragraph
-      isVoid: false
-      data: {}
+        - object: block
+          type: paragraph
+          isVoid: false
+          data: {}
+          nodes:
+            - object: text
+              leaves:
+                - object: leaf
+                  text: Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs)
+                  marks: []
+    x-gitbook-description-html: >-
+      <p>Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
+      Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
+      respondem de imediato com um id; consulte GET /database/{dbID} para o estado.</p>
+  - name: CDN
+    description: >-
+      CDN pública de arquivos da conta (add-on `cdn`). Upload/gestão por esta API;
+      leitura pública em https://cdn.discloud.com/{userId}/{path}. Escrita exige add-on CDN
+      ativo. Prefira PUT /cdn/upload até ~100 MB; use /cdn/multipart para arquivos maiores.
+      Respostas flat (sem envelope `data`). Nunca expõe URL de storage de terceiros.
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
       nodes:
-      - object: text
-        leaves:
-        - object: leaf
-          text: CDN pública de arquivos da conta (add-on cdn). Upload/gestão por esta API; leitura pública em https://cdn.discloud.com/{userId}/{path}.
-          marks: []
-  x-gitbook-description-html: >-
-    <p>CDN pública de arquivos da conta (add-on <code>cdn</code>). Upload/gestão por esta API;
-    leitura pública em <code>https://cdn.discloud.com/{userId}/{path}</code>. Escrita exige add-on CDN
-    ativo. Prefira <code>PUT /cdn/upload</code> até ~100&nbsp;MB; use
-    <code>/cdn/multipart</code> para arquivos maiores. Respostas flat (sem envelope <code>data</code>).</p>
+        - object: block
+          type: paragraph
+          isVoid: false
+          data: {}
+          nodes:
+            - object: text
+              leaves:
+                - object: leaf
+                  text: >-
+                    CDN pública de arquivos da conta (add-on cdn). Upload/gestão por esta API;
+                    leitura pública em https://cdn.discloud.com/{userId}/{path}.
+                  marks: []
+    x-gitbook-description-html: >-
+      <p>CDN pública de arquivos da conta (add-on <code>cdn</code>). Upload/gestão por esta API;
+      leitura pública em <code>https://cdn.discloud.com/{userId}/{path}</code>. Escrita exige add-on CDN
+      ativo. Prefira <code>PUT /cdn/upload</code> até ~100&nbsp;MB; use
+      <code>/cdn/multipart</code> para arquivos maiores. Respostas flat (sem envelope <code>data</code>).</p>
 paths:
   /user:
     get:
@@ -7848,7 +7850,7 @@ paths:
         - CDN
       summary: Enviar uma parte do multipart
       description: >-
-        Envia uma parte (multipart binário `file`). Partes intermediárias ≥ 5 MB; cada body HTTP ≤ ~100 MB. Passe `size` (bytes da parte) na query ou header `x-cdn-file-size`.
+        Envia uma parte (multipart binário `file`). Partes intermediárias >= 5 MB; cada body HTTP <= ~100 MB. Passe `size` (bytes da parte) na query ou header `x-cdn-file-size`.
       operationId: uploadCdnMultipartPart
       parameters:
         - name: uploadId
