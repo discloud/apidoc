@@ -1217,6 +1217,34 @@ tags:
     <p>Operações sobre bancos de dados gerenciados (criar, ciclo de vida, backups e logs).
     Requer plano Diamond (4) ou superior para criar/restaurar. Create e restore
     respondem de imediato com um id; consulte GET /database/{dbID} para o estado.</p>
+  - name: CDN
+    description: >-
+      CDN pública de arquivos da conta (add-on `cdn`). Upload/gestão por esta API;
+      leitura pública em https://cdn.discloud.com/{userId}/{path}. Escrita exige add-on CDN
+      ativo. Prefira PUT /cdn/upload até ~100 MB; use /cdn/multipart para arquivos maiores.
+      Respostas flat (sem envelope `data`). Nunca expõe URL de storage de terceiros.
+    x-gitbook-description-document:
+      object: document
+      data:
+        schemaVersion: 9
+      nodes:
+        - object: block
+          type: paragraph
+          isVoid: false
+          data: {}
+          nodes:
+            - object: text
+              leaves:
+                - object: leaf
+                  text: >-
+                    CDN pública de arquivos da conta (add-on cdn). Upload/gestão por esta API;
+                    leitura pública em https://cdn.discloud.com/{userId}/{path}.
+                  marks: []
+    x-gitbook-description-html: >-
+      <p>CDN pública de arquivos da conta (add-on <code>cdn</code>). Upload/gestão por esta API;
+      leitura pública em <code>https://cdn.discloud.com/{userId}/{path}</code>. Escrita exige add-on CDN
+      ativo. Prefira <code>PUT /cdn/upload</code> até ~100&nbsp;MB; use
+      <code>/cdn/multipart</code> para arquivos maiores. Respostas flat (sem envelope <code>data</code>).</p>
 paths:
   /user:
     get:
@@ -7166,3 +7194,798 @@ paths:
                 $ref: '#/components/schemas/Error'
           x-gitbook-description-html: <p>Team não encontrado ou não é membro</p>
       x-gitbook-description-html: <p>Remove o próprio usuário do team. O dono não pode sair.</p>
+
+  /cdn/usage:
+    get:
+      tags:
+        - CDN
+      summary: Obter uso e quota da CDN
+      description: >-
+        Retorna bytes usados e quota do add-on `cdn` ativo (`hasAddon`, `quotaGb`, `usedBytes`, `remainingBytes`). Não inclui `object_storage`.
+      operationId: getCdnUsage
+      responses:
+        "200":
+          description: Uso retornado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                hasAddon: true
+                quotaGb: 50
+                quotaBytes: 53687091200
+                usedBytes: 1048576
+                remainingBytes: 53686042624
+                usedHuman: 1.00 MB
+                quotaHuman: 50.00 GB
+          x-gitbook-description-html: <p>Uso retornado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+      x-gitbook-description-html: <p>Retorna uso da CDN e quota do add-on.</p>
+
+  /cdn/stat:
+    get:
+      tags:
+        - CDN
+      summary: Resumo da conta CDN
+      description: >-
+        Resumo da conta (uso + base pública). Opcional `countObjects=1` para contar objetos (mais lento).
+      operationId: getCdnStat
+      parameters:
+        - name: countObjects
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["0", "1", "true", "false"]
+          description: Use 1/true para contar objetos
+      responses:
+        "200":
+          description: Stat retornado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                hasAddon: true
+                quotaGb: 50
+                usedBytes: 1048576
+                publicBaseUrl: https://cdn.discloud.com
+          x-gitbook-description-html: <p>Stat retornado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+      x-gitbook-description-html: <p>Resumo da conta CDN.</p>
+
+  /cdn/list:
+    get:
+      tags:
+        - CDN
+      summary: Listar arquivos e pastas da CDN
+      description: >-
+        Lista objetos no prefixo da sua CDN. Envie só `prefix` relativo (sem userId, sem barra inicial).
+      operationId: listCdn
+      parameters:
+        - name: prefix
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Prefixo relativo, ex. images/
+          example: images/
+        - name: maxKeys
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista retornada
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                prefix: images/
+                files:
+                  - path: images/logo.png
+                    size: 12345
+                    url: https://cdn.discloud.com/803658045736878080/images/logo.png
+                folders:
+                  - path: images/icons/
+          x-gitbook-description-html: <p>Lista retornada</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+      x-gitbook-description-html: <p>Lista arquivos/pastas da CDN.</p>
+
+  /cdn/file:
+    get:
+      tags:
+        - CDN
+      summary: Obter metadados do arquivo
+      description: >-
+        HEAD/metadados de um arquivo. Path relativo (`images/logo.png`). Download público na `url` retornada (sem token).
+      operationId: headCdnFile
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Caminho relativo do arquivo
+          example: images/logo.png
+      responses:
+        "200":
+          description: Metadados do arquivo
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                exists: true
+                path: images/logo.png
+                size: 12345
+                contentType: image/png
+                url: https://cdn.discloud.com/803658045736878080/images/logo.png
+          x-gitbook-description-html: <p>Metadados do arquivo</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+      x-gitbook-description-html: <p>Metadados do arquivo (HEAD).</p>
+    delete:
+      tags:
+        - CDN
+      summary: Apagar arquivo da CDN
+      description: Apaga um arquivo pelo path relativo.
+      operationId: deleteCdnFile
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+          example: images/logo.png
+      responses:
+        "200":
+          description: Arquivo apagado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                message: Arquivo apagado
+                deleted: true
+                freedBytes: 12345
+          x-gitbook-description-html: <p>Arquivo apagado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+      x-gitbook-description-html: <p>Apaga um arquivo da CDN.</p>
+
+  /cdn/upload:
+    put:
+      tags:
+        - CDN
+      summary: Upload de arquivo (recomendado)
+      description: >-
+        Upload simples até ~100 MB. Envie multipart com campo `file`, mais `path` e `size` (bytes) na query (preferencial), no form ou no header `x-cdn-file-size`. A quota é validada neste endpoint (não há `/can-upload` na API pública). Retorna `url` pública em cdn.discloud.com.
+      operationId: uploadCdnFile
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Caminho relativo de destino
+          example: images/logo.png
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Tamanho exato do arquivo em bytes
+          example: 12345
+        - name: upsert
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["true", "false"]
+          description: Sobrescrever se existir (default true)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Bytes do arquivo
+                path:
+                  type: string
+                  description: Fallback opcional de path no form
+                size:
+                  type: integer
+                  description: Fallback opcional de size no form
+      responses:
+        "201":
+          description: Enviado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                message: Arquivo enviado
+                key: 803658045736878080/images/logo.png
+                url: https://cdn.discloud.com/803658045736878080/images/logo.png
+                size: 12345
+                contentType: image/png
+          x-gitbook-description-html: <p>Enviado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "403":
+          description: "Proibido / add-on CDN necessário"
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: error
+                message: Add-on CDN necessário
+                code: CDN_ADDON_REQUIRED
+          x-gitbook-description-html: <p>Proibido / add-on CDN necessário</p>
+        "413":
+          description: "Quota excedida"
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: error
+                message: Quota excedida
+                code: CDN_QUOTA_EXCEEDED
+                used: 53687091200
+                quota: 53687091200
+                need: 12345
+          x-gitbook-description-html: <p>Quota excedida</p>
+      x-gitbook-description-html: <p>Upload simples recomendado da CDN.</p>
+
+  /cdn/folder:
+    post:
+      tags:
+        - CDN
+      summary: Criar pasta
+      description: Cria marcador de pasta vazia. Exige add-on CDN ativo.
+      operationId: createCdnFolder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+              properties:
+                path:
+                  type: string
+                  example: images/icons
+            example:
+              path: images/icons
+      responses:
+        "201":
+          description: Pasta criada
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                message: Pasta criada
+                path: images/icons/
+          x-gitbook-description-html: <p>Pasta criada</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "403":
+          description: "Proibido / add-on CDN necessário"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Proibido / add-on CDN necessário</p>
+      x-gitbook-description-html: <p>Cria pasta na CDN.</p>
+    delete:
+      tags:
+        - CDN
+      summary: Apagar pasta
+      description: Apaga todos os objetos sob um prefixo relativo.
+      operationId: deleteCdnFolder
+      parameters:
+        - name: prefix
+          in: query
+          required: true
+          schema:
+            type: string
+          example: images/icons/
+      responses:
+        "200":
+          description: Pasta apagada
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                deletedCount: 3
+                freedBytes: 45678
+          x-gitbook-description-html: <p>Pasta apagada</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+      x-gitbook-description-html: <p>Apaga pasta/prefixo da CDN.</p>
+
+  /cdn/account:
+    delete:
+      tags:
+        - CDN
+      summary: Limpar toda a CDN da conta
+      description: >-
+        Apaga todos os objetos e multiparts incompletos do usuário autenticado. Irreversível.
+      operationId: purgeCdnAccount
+      responses:
+        "200":
+          description: Conta limpa
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                deletedCount: 12
+                freedBytes: 987654
+                abortedMultipart: 1
+          x-gitbook-description-html: <p>Conta limpa</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+      x-gitbook-description-html: <p>Limpa todos os dados CDN da conta.</p>
+
+  /cdn/reconcile:
+    post:
+      tags:
+        - CDN
+      summary: Reconciliar uso da CDN
+      description: Recalcula bytes usados a partir do storage (manutenção).
+      operationId: reconcileCdnUsage
+      responses:
+        "200":
+          description: Reconciliado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                usedBytes: 1048576
+          x-gitbook-description-html: <p>Reconciliado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+      x-gitbook-description-html: <p>Reconcilia contadores de uso da CDN.</p>
+
+  /cdn/multipart:
+    post:
+      tags:
+        - CDN
+      summary: Iniciar upload grande (multipart)
+      description: >-
+        Inicia multipart gerenciado para arquivos > ~100 MB. Retorna `uploadId`. Depois envie as partes e chame complete. OVH/S3 nunca é exposto ao cliente.
+      operationId: createCdnMultipart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - path
+                - size
+              properties:
+                path:
+                  type: string
+                  example: videos/demo.mp4
+                size:
+                  type: integer
+                  description: Tamanho total do arquivo em bytes
+                  example: 524288000
+                contentType:
+                  type: string
+                  example: video/mp4
+                upsert:
+                  type: boolean
+                  default: true
+            example:
+              path: videos/demo.mp4
+              size: 524288000
+              contentType: video/mp4
+      responses:
+        "201":
+          description: Multipart criado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                uploadId: mp_abc123
+                path: videos/demo.mp4
+                size: 524288000
+                partSizeHint: 10485760
+          x-gitbook-description-html: <p>Multipart criado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "403":
+          description: "Proibido / add-on CDN necessário"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Proibido / add-on CDN necessário</p>
+        "413":
+          description: "Quota excedida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Quota excedida</p>
+      x-gitbook-description-html: <p>Inicia upload multipart da CDN.</p>
+
+  /cdn/multipart/{uploadId}:
+    get:
+      tags:
+        - CDN
+      summary: Status do multipart
+      operationId: getCdnMultipartStatus
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Status retornado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                uploadId: mp_abc123
+                path: videos/demo.mp4
+                partsReceived: 3
+          x-gitbook-description-html: <p>Status retornado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+      x-gitbook-description-html: <p>Obtém status do upload multipart.</p>
+    delete:
+      tags:
+        - CDN
+      summary: Abortar upload multipart
+      operationId: abortCdnMultipart
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Abortado
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                aborted: true
+          x-gitbook-description-html: <p>Abortado</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+      x-gitbook-description-html: <p>Aborta upload multipart.</p>
+
+  /cdn/multipart/{uploadId}/parts/{partNumber}:
+    put:
+      tags:
+        - CDN
+      summary: Enviar uma parte do multipart
+      description: >-
+        Envia uma parte (multipart binário `file`). Partes intermediárias ≥ 5 MB; cada body HTTP ≤ ~100 MB. Passe `size` (bytes da parte) na query ou header `x-cdn-file-size`.
+      operationId: uploadCdnMultipartPart
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: partNumber
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Tamanho da parte em bytes
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Parte enviada
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                partNumber: 1
+                etag: '"abc"'
+                size: 10485760
+          x-gitbook-description-html: <p>Parte enviada</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+        "413":
+          description: "Quota excedida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Quota excedida</p>
+      x-gitbook-description-html: <p>Envia uma parte do multipart.</p>
+
+  /cdn/multipart/{uploadId}/complete:
+    post:
+      tags:
+        - CDN
+      summary: Finalizar upload multipart
+      description: Finaliza o multipart e retorna a URL pública.
+      operationId: completeCdnMultipart
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      partNumber:
+                        type: integer
+                      etag:
+                        type: string
+      responses:
+        "200":
+          description: Concluído
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: ok
+                path: videos/demo.mp4
+                url: https://cdn.discloud.com/803658045736878080/videos/demo.mp4
+                size: 524288000
+          x-gitbook-description-html: <p>Concluído</p>
+        "401":
+          description: "Erro de autenticação"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Erro de autenticação</p>
+        "400":
+          description: "Requisição inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Requisição inválida</p>
+        "404":
+          description: "Não encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          x-gitbook-description-html: <p>Não encontrado</p>
+      x-gitbook-description-html: <p>Finaliza upload multipart.</p>
